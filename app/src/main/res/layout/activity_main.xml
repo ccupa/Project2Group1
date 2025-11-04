@@ -7,12 +7,72 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <Button
+        android:id="@+id/jackTriviaButton"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="64dp"
+        android:text="Jack"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseYourTriviaTextView" />
+
+    <Button
+        android:id="@+id/carlosTriviaButton"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:text="Carlos"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jackTriviaButton" />
+
+    <Button
+        android:id="@+id/josephTriviaButton"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="36dp"
+        android:text="Joseph"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseYourTriviaTextView" />
+
+    <Button
+        android:id="@+id/leaderboardButton"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="116dp"
+        android:text="@string/leaderboard"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/joshTriviaButton"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="36dp"
+        android:text="Josh"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/josephTriviaButton" />
+
+    <TextView
+        android:id="@+id/chooseYourTriviaTextView"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="CHOOSE YOUR TRIVIA!!!"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
