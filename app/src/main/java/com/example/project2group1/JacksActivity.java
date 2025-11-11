@@ -15,12 +15,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class JacksActivity extends AppCompatActivity {
 
     ActivityJacksBinding binding;
     String [][] answers = new String[10][5]; // ten questions, 4 possible answers + the question
+    private int highScore = 0;
+    private int score = 0;
+    private int correctIndex;
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,30 +39,77 @@ public class JacksActivity extends AppCompatActivity {
         binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Top left clicked");
+                checkAnswer(0);
             }
         });
 
         binding.answerTopRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Top right clicked");
+                checkAnswer(1);
             }
         });
 
         binding.answerBottomLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Bottom left clicked");
+                checkAnswer(2);
             }
         });
 
         binding.answerBottomRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Bottom right clicked");
+                checkAnswer(3);
             }
         });
+
+        showQuestion(currentIndex);
+
+    }
+
+    public void checkAnswer(int index) {
+
+        if (index == correctIndex){
+            toastMaker("Correct!!");
+            score += 50;
+        }
+        else {
+            toastMaker("Incorrect :(");
+        }
+
+        binding.scoreTextView.setText("Score: " + score);
+        currentIndex++;
+        showQuestion(currentIndex);
+
+    }
+
+    public void showQuestion(int index) {
+
+        if (index >= answers.length) {
+            toastMaker("All questions done");
+            currentIndex = 0;
+            if (score > highScore) {
+                toastMaker("New High Score!!!");
+                highScore = score;
+            }
+            score = 0;
+            binding.questionTextView.setText("High Score: " + highScore);
+            return;
+        }
+
+        String[] question = answers[index];
+        binding.questionTextView.setText(question[0]);
+
+        ArrayList<String> choices = new ArrayList<>();
+        for (int i = 1; i < question.length;i++) choices.add(question[i]);
+        Collections.shuffle(choices);
+        correctIndex = choices.indexOf(question[1]);
+
+        binding.answerTopLeftButton.setText(choices.get(0));
+        binding.answerTopRightButton.setText(choices.get(1));
+        binding.answerBottomLeftButton.setText(choices.get(2));
+        binding.answerBottomRightButton.setText(choices.get(3));
 
     }
 
@@ -119,7 +171,8 @@ public class JacksActivity extends AppCompatActivity {
             int randomIndex = (int)(Math.random() * allQuestions.size());
             if (containsList(allQuestions.get(randomIndex))) {
                 i--;
-                continue;            }
+                continue;
+            }
             answers[i] = allQuestions.get(randomIndex);
 
         }
