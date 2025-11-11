@@ -11,56 +11,45 @@
         android:id="@+id/answerTopLeftButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="388dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="88dp"
         android:gravity="center"
         android:text="Answer 1"
-        app:layout_constraintEnd_toStartOf="@+id/answerTopRightButton"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
     <Button
         android:id="@+id/answerTopRightButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginTop="388dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="36dp"
         android:gravity="center"
         android:text="Answer 2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
     <Button
         android:id="@+id/answerBottomLeftButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="Answer 3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/answerBottomRightButton"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answerTopLeftButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/answerTopLeftButton" />
 
     <Button
         android:id="@+id/answerBottomRightButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="92dp"
         android:gravity="center"
         android:text="Answer 4"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toEndOf="@+id/answerTopLeftButton"
-        app:layout_constraintTop_toBottomOf="@+id/answerTopRightButton"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/answerTopRightButton" />
 
     <TextView
         android:id="@+id/questionTextView"
@@ -75,13 +64,25 @@
 
     <TextView
         android:id="@+id/scoreTextView"
-        android:layout_width="227dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:text="Score"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="76dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center_vertical"
+        android:text="Score:"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/actualScoreTextView"
+        android:layout_width="82dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="44dp"
+        android:gravity="center_vertical"
+        android:text="0"
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/scoreTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
 

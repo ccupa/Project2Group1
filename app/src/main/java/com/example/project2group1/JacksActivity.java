@@ -36,6 +36,7 @@ public class JacksActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         loadQuestions("basketball_trivia_2004_present.csv");
 
+        // tried to code each button set up in this order to keep consistency
         binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +69,9 @@ public class JacksActivity extends AppCompatActivity {
 
     }
 
-    public void checkAnswer(int index) {
+    public void checkAnswer(int buttonClicked) {
 
-        if (index == correctIndex){
+        if (buttonClicked == correctIndex){
             toastMaker("Correct!!");
             score += 50;
         }
@@ -78,7 +79,7 @@ public class JacksActivity extends AppCompatActivity {
             toastMaker("Incorrect :(");
         }
 
-        binding.scoreTextView.setText("Score: " + score);
+        binding.actualScoreTextView.setText(score);
         currentIndex++;
         showQuestion(currentIndex);
 
