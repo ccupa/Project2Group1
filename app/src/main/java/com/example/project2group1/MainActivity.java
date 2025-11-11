@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         return intent;
     }
 
+
+
     public void toastMaker(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

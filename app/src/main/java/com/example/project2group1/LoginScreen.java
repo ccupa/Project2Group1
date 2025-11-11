@@ -14,6 +14,8 @@ import com.example.project2group1.databinding.ActivityLoginScreenBinding;
 public class LoginScreen extends AppCompatActivity {
 
     ActivityLoginScreenBinding binding;
+    private static String username;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class LoginScreen extends AppCompatActivity {
         String testUsername = "Drew";
         String testPassword = "password";
 
-        String username = binding.usernameEditText.getText().toString();
-        String password = binding.passwordEditText.getText().toString();
+        username = binding.usernameEditText.getText().toString();
+        password = binding.passwordEditText.getText().toString();
 
         if (username.isEmpty()){
             toastMaker("Username may not be blank");
@@ -68,6 +70,10 @@ public class LoginScreen extends AppCompatActivity {
         toastMaker("Welcome " + username);
         startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), username));
 
+    }
+
+    public static String getUserName() {
+        return username;
     }
 
     static Intent loginIntentFactory(Context context) {

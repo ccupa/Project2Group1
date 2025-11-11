@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2group1.databinding.ActivityJacksBinding;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,8 +24,9 @@ public class JacksActivity extends AppCompatActivity {
     String [][] answers = new String[10][5]; // ten questions, 4 possible answers + the question
     private int highScore = 0;
     private int score = 0;
-    private int correctIndex;
     private int currentIndex = 0;
+    private int correctIndex;
+    private boolean roundOver = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +41,33 @@ public class JacksActivity extends AppCompatActivity {
         binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(0);
+                if (roundOver) endGameView(0);
+                else checkAnswer(0);
             }
         });
 
         binding.answerTopRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(1);
+                if (roundOver) endGameView(1);
+                else checkAnswer(1);
+
             }
         });
 
         binding.answerBottomLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(2);
+                if (roundOver) endGameView(2);
+                else checkAnswer(2);
             }
         });
 
         binding.answerBottomRightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(3);
+                if (roundOver) endGameView(3);
+                else checkAnswer(3);
             }
         });
 
@@ -79,9 +85,55 @@ public class JacksActivity extends AppCompatActivity {
             toastMaker("Incorrect :(");
         }
 
-        binding.actualScoreTextView.setText(score);
+        String score_as_String;
+
+        score_as_String = String.valueOf(score);
+
+        binding.actualScoreTextView.setText(score_as_String);
         currentIndex++;
         showQuestion(currentIndex);
+
+    }
+
+
+
+    @SuppressLint("SetTextI18n")
+    private void endGameView() {
+        //probably a better way to hide the textViews but this works
+        binding.scoreTextView.setText("");
+        binding.actualScoreTextView.setText("");
+
+        String scorePlaceHolder = String.valueOf(score);
+        binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
+
+        binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
+        binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1
+        binding.answerBottomLeftButton.setText(("Back")); // userExitClick = 2
+        binding.answerBottomRightButton.setText("Play Again"); // userExitClick = 3
+
+       roundOver = true;
+    }
+
+    private void endGameView(int userExitClicked) {
+
+        if (userExitClicked == 0) {
+            toastMaker("Logging out is work in progress");
+        }
+        else if (userExitClicked == 1) {
+            toastMaker("Leaderboard work in progress");
+        }
+        else if (userExitClicked == 2) {
+            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), LoginScreen.getUserName()));
+        }
+        else if (userExitClicked == 3) {
+            currentIndex = 0;
+            score = 0;
+
+            showQuestion(currentIndex);
+        }
+        else{
+            toastMaker("Not accepted exit: " + userExitClicked);
+        }
 
     }
 
@@ -91,12 +143,12 @@ public class JacksActivity extends AppCompatActivity {
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
-                toastMaker("New High Score!!!");
+               toastMaker("New High Score!!!");
                 highScore = score;
             }
-            score = 0;
-            binding.questionTextView.setText("High Score: " + highScore);
-            return;
+           // binding.questionTextView.setText("High Score: " + highScore);
+
+            endGameView();
         }
 
         String[] question = answers[index];
@@ -170,7 +222,7 @@ public class JacksActivity extends AppCompatActivity {
         for (int i = 0; i < answers.length; i++) {
 
             int randomIndex = (int)(Math.random() * allQuestions.size());
-            if (containsList(allQuestions.get(randomIndex))) {
+            if (answersContainsQuestion(allQuestions.get(randomIndex))) {
                 i--;
                 continue;
             }
@@ -179,7 +231,7 @@ public class JacksActivity extends AppCompatActivity {
         }
     }
 
-    private boolean containsList(String[] list) {
+    private boolean answersContainsQuestion(String[] list) {
 
         if (list == null || list.length == 0) return false;
 
