@@ -37,6 +37,13 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
+        binding.skipLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), "Drew"));
+            }
+        });
+
     }
 
     public void verifyUser() {

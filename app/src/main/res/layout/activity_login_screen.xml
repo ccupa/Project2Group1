@@ -77,4 +77,14 @@
         android:text="@string/click_here_to_sign_up"
         app:layout_constraintBottom_toTopOf="@+id/createdByTextView"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/skipLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="16dp"
+        android:text="Skip Login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

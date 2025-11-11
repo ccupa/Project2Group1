@@ -1,0 +1,149 @@
+package com.example.project2group1;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.project2group1.databinding.ActivityJacksBinding;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class JacksActivity extends AppCompatActivity {
+
+    ActivityJacksBinding binding;
+    String [][] answers = new String[10][5]; // ten questions, 4 possible answers + the question
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        binding = ActivityJacksBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        EdgeToEdge.enable(this);
+        loadQuestions("basketball_trivia_2004_present.csv");
+
+        binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastMaker("Top left clicked");
+            }
+        });
+
+        binding.answerTopRightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastMaker("Top right clicked");
+            }
+        });
+
+        binding.answerBottomLeftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastMaker("Bottom left clicked");
+            }
+        });
+
+        binding.answerBottomRightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toastMaker("Bottom right clicked");
+            }
+        });
+
+    }
+
+    // plan to modify this later to get the questions from an API, but for now this will have to do
+    private void loadQuestions(String filename) {
+
+        ArrayList<String[]> allQuestions = new ArrayList<>();
+
+        try{
+            Scanner s = new Scanner(getAssets().open(filename));
+            while (s.hasNext()) {
+                // read the line
+                String line = s.nextLine().trim();
+                if (line.startsWith("#") || line.isEmpty()) continue;
+
+                // parse through the parts of the line and store them
+                String [] parts = line.split(",",-1);
+                if (parts.length != 12) continue;
+                for (int i = 0; i < 12; i++) parts[i] = parts[i].trim();
+
+                // begin inputting the question
+                // [question, correct, wrong, wrong, wrong]
+                String[] question = new String[5];
+                question[0] = parts[0]; //question
+                question[1] = parts[1]; //correct answer
+
+                // get three indexes so the wrong answers are always random
+                int index1 = (int)(Math.random() * 10) + 2;
+                int index2 = (int)(Math.random() * 10) + 2;
+                int index3 = (int)(Math.random() * 10) + 2;
+
+                while (index1 == index2 || index2 == index3 || index1 == index3) {
+                    index1 = (int)(Math.random() * 9) + 2;
+                    index2 = (int)(Math.random() * 9) + 2;
+                    index3 = (int)(Math.random() * 9) + 2;
+                }
+
+                // add incorrect answers to question
+                question[2] = parts[index1];
+                question[3] = parts[index2];
+                question[4] = parts[index3];
+
+                // add question to array list
+                allQuestions.add(question);
+            }
+            s.close();
+        }
+        catch (FileNotFoundException e) {
+            toastMaker("Couldn't find the file");
+            return;
+        } catch (IOException e) {
+            toastMaker("Couldn't open the file");
+            return;
+        }
+
+        // choose ten random questions and put them into answers
+        for (int i = 0; i < answers.length; i++) {
+
+            int randomIndex = (int)(Math.random() * allQuestions.size());
+            if (containsList(allQuestions.get(randomIndex))) {
+                i--;
+                continue;            }
+            answers[i] = allQuestions.get(randomIndex);
+
+        }
+    }
+
+    private boolean containsList(String[] list) {
+
+        if (list == null || list.length == 0) return false;
+
+        for (String[] answer : answers) {
+            if (answer == null || answer.length == 0 || answer[0] == null) continue;
+            if (answer[0].equals(list[0])) return true;
+        }
+
+        return false;
+
+    }
+
+    static Intent jackIntentFactory(Context context) {
+        return new Intent(context, JacksActivity.class);
+    }
+
+    public void toastMaker(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+}
