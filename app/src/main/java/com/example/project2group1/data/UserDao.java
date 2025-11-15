@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
-public class UserDao {
+public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     void insert(User user);
 
