@@ -7,20 +7,24 @@ public class UserRepository {
         this.dao = dao;
     }
 
-    public boolean createUser(String username, String password, boolean isAdmin) throws Exception {
-        if (username.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("Empty fields");
+    public void createUser(String username, String password, boolean isAdmin) throws Exception {
+        if (username == null || username.trim().isEmpty() ||
+                password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Please fill in all fields");
         }
-        User existing = dao.getUser(username);
+        User existing = dao.getUser(username.trim());
         if (existing != null) {
             throw new IllegalStateException("User already exists");
         }
-        dao.insert(new User(username, password, isAdmin));
-        return true;
+        dao.insert(new User(username.trim(), password, isAdmin));
     }
 
     public User validateLogin(String username, String password) throws Exception {
-        User u = dao.getUser(username);
+        if (username == null || username.trim().isEmpty() ||
+                password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Please fill in all fields");
+        }
+        User u = dao.getUser(username.trim());
         if (u == null) throw new IllegalArgumentException("User not found");
         if (!u.password.equals(password)) throw new IllegalArgumentException("Incorrect password");
         return u;

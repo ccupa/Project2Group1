@@ -2,8 +2,8 @@ package com.example.project2group1.core;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.example.project2group1.data.User;
 
+import com.example.project2group1.data.User;
 
 public class Prefs {
     private static final String PREF_NAME = "triviago_prefs";
@@ -31,7 +31,7 @@ public class Prefs {
     }
 
     public String getUsername() {
-        return sp.getString(KEY_USERNAME, null);
+        return sp.getString(KEY_USERNAME, "");
     }
 
     public boolean isAdmin() {

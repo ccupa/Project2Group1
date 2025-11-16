@@ -5,29 +5,40 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.project2group1.R;
 import com.example.project2group1.core.Prefs;
 
 public class LandingPageActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // IMPORTANT: your file name is activity_landing_page.xml (with _page)
         setContentView(R.layout.activity_landing_page);
 
         Prefs prefs = new Prefs(this);
-        String username = prefs.getUsername();
-        boolean isAdmin = prefs.isAdmin();
+        if (!prefs.isLoggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return;
+        }
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         TextView tvRole = findViewById(R.id.tvRole);
         Button btnAdmin = findViewById(R.id.btnAdmin);
         Button btnLogout = findViewById(R.id.btnLogout);
 
+        String username = prefs.getUsername();
+        boolean isAdmin = prefs.isAdmin();
+
         tvWelcome.setText("Welcome, " + username + "!");
         tvRole.setText(isAdmin ? "Role: Admin" : "Role: User");
         btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
+
+        btnAdmin.setOnClickListener(v ->
+                tvRole.setText("Role: Admin • You tapped the admin button"));
 
         btnLogout.setOnClickListener(v -> {
             prefs.logout();

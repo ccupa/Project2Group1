@@ -24,14 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsernameLogin, etPasswordLogin;
     private EditText etUsernameCreate, etPasswordCreate;
 
-    private boolean createMode = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login); // matches your XML
 
-        // Wire up EXACT ids from activity_login.xml
         title = findViewById(R.id.title);
         groupLogin = findViewById(R.id.groupLogin);
         groupCreate = findViewById(R.id.groupCreate);
@@ -48,68 +45,66 @@ public class LoginActivity extends AppCompatActivity {
         // Start in login mode
         applyMode(false);
 
-        toggleMode.setOnClickListener(v -> {
-            createMode = !createMode;
-            applyMode(createMode);
-        });
+        toggleMode.setOnClickListener(v -> applyMode(groupCreate.getVisibility() != View.VISIBLE));
 
-        btnLogin.setOnClickListener(v -> {
-            String username = etUsernameLogin.getText().toString().trim();
-            String password = etPasswordLogin.getText().toString();
-            if (username.isEmpty() || password.isEmpty()) {
-                toast("Please fill in all fields");
-                return;
-            }
-            new Thread(() -> {
-                try {
-                    UserRepository repo =
-                            new UserRepository(AppDatabase.getInstance(getApplicationContext()).userDao());
-                    User u = repo.validateLogin(username, password);
-                    new Prefs(getApplicationContext()).setLoggedIn(u);
-                    runOnUiThread(() -> {
-                        toast("Welcome back!");
-                        startActivity(new Intent(this, LandingPageActivity.class));
-                        finish();
-                    });
-                } catch (Exception e) {
-                    toast(e.getMessage());
-                }
-            }).start();
-        });
-
-        btnCreate.setOnClickListener(v -> {
-            String username = etUsernameCreate.getText().toString().trim();
-            String password = etPasswordCreate.getText().toString();
-            if (username.isEmpty() || password.isEmpty()) {
-                toast("Please fill in all fields");
-                return;
-            }
-            new Thread(() -> {
-                try {
-                    UserRepository repo =
-                            new UserRepository(AppDatabase.getInstance(getApplicationContext()).userDao());
-                    // No admin toggle in layout -> default new users to non-admin
-                    repo.createUser(username, password, false);
-                    User u = repo.validateLogin(username, password);
-                    new Prefs(getApplicationContext()).setLoggedIn(u);
-                    runOnUiThread(() -> {
-                        toast("Account created!");
-                        startActivity(new Intent(this, LandingPageActivity.class));
-                        finish();
-                    });
-                } catch (Exception e) {
-                    toast(e.getMessage());
-                }
-            }).start();
-        });
+        btnLogin.setOnClickListener(v -> doLogin());
+        btnCreate.setOnClickListener(v -> doCreate());
     }
 
     private void applyMode(boolean create) {
-        createMode = create;
         groupCreate.setVisibility(create ? View.VISIBLE : View.GONE);
         groupLogin.setVisibility(create ? View.GONE : View.VISIBLE);
         title.setText(create ? R.string.create_account : R.string.login);
         toggleMode.setText(create ? R.string.switch_to_login : R.string.switch_to_create);
+    }
+
+    private void doLogin() {
+        String username = etUsernameLogin.getText().toString().trim();
+        String password = etPasswordLogin.getText().toString();
+        if (username.isEmpty() || password.isEmpty()) {
+            toast("Please fill in all fields");
+            return;
+        }
+        new Thread(() -> {
+            try {
+                UserRepository repo = new UserRepository(
+                        AppDatabase.getInstance(getApplicationContext()).userDao());
+                User u = repo.validateLogin(username, password);
+                new Prefs(getApplicationContext()).setLoggedIn(u);
+                runOnUiThread(() -> {
+                    toast("Welcome back!");
+                    startActivity(new Intent(this, LandingPageActivity.class));
+                    finish();
+                });
+            } catch (Exception e) {
+                toast(e.getMessage() != null ? e.getMessage() : "Login failed");
+            }
+        }).start();
+    }
+
+    private void doCreate() {
+        String username = etUsernameCreate.getText().toString().trim();
+        String password = etPasswordCreate.getText().toString();
+        if (username.isEmpty() || password.isEmpty()) {
+            toast("Please fill in all fields");
+            return;
+        }
+        new Thread(() -> {
+            try {
+                UserRepository repo = new UserRepository(
+                        AppDatabase.getInstance(getApplicationContext()).userDao());
+                repo.createUser(username, password, false);
+                User u = repo.validateLogin(username, password);
+                new Prefs(getApplicationContext()).setLoggedIn(u);
+                runOnUiThread(() -> {
+                    toast("Account created!");
+                    startActivity(new Intent(this, LandingPageActivity.class));
+                    finish();
+                });
+            } catch (Exception e) {
+                toast(e.getMessage() != null ? e.getMessage() : "Sign up failed");
+            }
+        }).start();
     }
 
     private void toast(String msg) {
