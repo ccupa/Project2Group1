@@ -26,9 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        /* ------------------------------
-           TEMP: Promote admin2 to admin
-           ------------------------------ */
+         //  TEMP: Promote admin2 to admin
         new Thread(() -> {
             UserDao dao = AppDatabase.getInstance(getApplicationContext()).userDao();
             // Make sure you have this query in UserDao:
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 dao.makeAdmin("admin2");
             } catch (Exception ignored) {}
         }).start();
-        /* --- remove this block once admin2 is updated --- */
+        // remove this block once admin2 is updated
 
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnCreate = findViewById(R.id.btnCreateAccount);

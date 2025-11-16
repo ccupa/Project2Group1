@@ -8,17 +8,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2Group1">
 
-        <!-- Landing page (no launcher icon) -->
         <activity
             android:name=".ui.LandingPageActivity"
             android:exported="false" />
 
-        <!-- Login screen (no launcher icon) -->
         <activity
             android:name=".ui.LoginActivity"
             android:exported="false" />
 
-        <!-- Main launcher activity -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login); // matches your XML
+        setContentView(R.layout.activity_login);
 
         title = findViewById(R.id.title);
         groupLogin = findViewById(R.id.groupLogin);
@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         etPasswordCreate = findViewById(R.id.etPasswordCreate);
         btnCreate = findViewById(R.id.btnCreate);
 
-        // Start in login mode
         applyMode(false);
 
         toggleMode.setOnClickListener(v -> applyMode(groupCreate.getVisibility() != View.VISIBLE));
@@ -76,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 // validate credentials
                 User u = repo.validateLogin(username, password);
 
-                // One-time fix: if admin2 exists but isn't marked admin, promote & re-fetch
+                // if admin2 exists but isn't marked admin, promote & re-fetch
                 if ("admin2".equalsIgnoreCase(u.username) && !u.isAdmin) {
                     dao.makeAdmin(u.username);
                     u = dao.getUser(u.username);  // re-fetch updated record with isAdmin = true

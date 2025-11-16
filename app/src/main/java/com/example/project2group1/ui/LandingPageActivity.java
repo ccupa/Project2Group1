@@ -16,7 +16,7 @@ public class LandingPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing_page); // note: _page
+        setContentView(R.layout.activity_landing_page);
 
         Prefs prefs = new Prefs(this);
 
