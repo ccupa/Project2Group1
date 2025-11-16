@@ -15,4 +15,7 @@ public interface UserDao {
 
     @Query("SELECT COUNT(*) FROM users")
     int countUsers();
+
+    @Query("UPDATE users SET isAdmin = 1 WHERE username = :username")
+    void makeAdmin(String username);
 }

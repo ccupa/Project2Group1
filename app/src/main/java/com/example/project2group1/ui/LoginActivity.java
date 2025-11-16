@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.project2group1.data.UserDao;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project2group1.R;
@@ -67,10 +70,21 @@ public class LoginActivity extends AppCompatActivity {
         }
         new Thread(() -> {
             try {
-                UserRepository repo = new UserRepository(
-                        AppDatabase.getInstance(getApplicationContext()).userDao());
+                UserDao dao = AppDatabase.getInstance(getApplicationContext()).userDao();
+                UserRepository repo = new UserRepository(dao);
+
+                // validate credentials
                 User u = repo.validateLogin(username, password);
+
+                // One-time fix: if admin2 exists but isn't marked admin, promote & re-fetch
+                if ("admin2".equalsIgnoreCase(u.username) && !u.isAdmin) {
+                    dao.makeAdmin(u.username);
+                    u = dao.getUser(u.username);  // re-fetch updated record with isAdmin = true
+                }
+
+                // Save updated user (now with correct isAdmin) to prefs
                 new Prefs(getApplicationContext()).setLoggedIn(u);
+
                 runOnUiThread(() -> {
                     toast("Welcome back!");
                     startActivity(new Intent(this, LandingPageActivity.class));
@@ -82,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
+
     private void doCreate() {
         String username = etUsernameCreate.getText().toString().trim();
         String password = etPasswordCreate.getText().toString();
@@ -91,11 +106,19 @@ public class LoginActivity extends AppCompatActivity {
         }
         new Thread(() -> {
             try {
-                UserRepository repo = new UserRepository(
-                        AppDatabase.getInstance(getApplicationContext()).userDao());
+                UserDao dao = AppDatabase.getInstance(getApplicationContext()).userDao();
+                UserRepository repo = new UserRepository(dao);
+
                 repo.createUser(username, password, false);
                 User u = repo.validateLogin(username, password);
+
+                if ("admin2".equalsIgnoreCase(u.username) && !u.isAdmin) {
+                    dao.makeAdmin(u.username);
+                    u = dao.getUser(u.username);
+                }
+
                 new Prefs(getApplicationContext()).setLoggedIn(u);
+
                 runOnUiThread(() -> {
                     toast("Account created!");
                     startActivity(new Intent(this, LandingPageActivity.class));
@@ -106,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }).start();
     }
+
 
     private void toast(String msg) {
         runOnUiThread(() -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());

@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="24dp"
+    android:id="@+id/landing_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LandingPageActivity">
+    android:orientation="vertical"
+    android:padding="24dp">
 
+    <!-- Shows the logged in username -->
     <TextView
         android:id="@+id/tvWelcome"
-        android:text="Welcome, user!"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Welcome!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
 
+    <!-- Shows if the user is Admin/User -->
     <TextView
         android:id="@+id/tvRole"
-        android:text="Role: User"
-        android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Role: User"
+        android:paddingBottom="16dp" />
 
-    <!-- Admin-only button: invisible at runtime, visible in layout editor -->
+    <!-- Admin-only area button: hidden at runtime, forced visible in the editor -->
     <Button
         android:id="@+id/btnAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Admin Area"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnLogout"
-        android:text="Logout"
-        android:layout_marginTop="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:padding="12dp" />
+
 </LinearLayout>

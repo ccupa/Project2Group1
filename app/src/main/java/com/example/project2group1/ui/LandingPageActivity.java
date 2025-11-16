@@ -12,37 +12,46 @@ import com.example.project2group1.R;
 import com.example.project2group1.core.Prefs;
 
 public class LandingPageActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // IMPORTANT: your file name is activity_landing_page.xml (with _page)
-        setContentView(R.layout.activity_landing_page);
+        setContentView(R.layout.activity_landing_page); // note: _page
 
         Prefs prefs = new Prefs(this);
+
+        // If not logged in, go back to main
         if (!prefs.isLoggedIn()) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
         }
 
+        String username = prefs.getUsername();
+        boolean isAdmin = prefs.isAdmin();
+
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         TextView tvRole = findViewById(R.id.tvRole);
         Button btnAdmin = findViewById(R.id.btnAdmin);
         Button btnLogout = findViewById(R.id.btnLogout);
 
-        String username = prefs.getUsername();
-        boolean isAdmin = prefs.isAdmin();
-
+        // Show username and role
         tvWelcome.setText("Welcome, " + username + "!");
         tvRole.setText(isAdmin ? "Role: Admin" : "Role: User");
-        btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
 
-        btnAdmin.setOnClickListener(v ->
-                tvRole.setText("Role: Admin • You tapped the admin button"));
+        // Show admin button only for admins
+        btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        btnAdmin.setOnClickListener(v -> {
+            // TODO: start your real AdminActivity when you add it
+            tvRole.setText("Role: Admin • Admin area tapped");
+        });
 
+        // Logout: clear prefs and return to MainActivity
         btnLogout.setOnClickListener(v -> {
             prefs.logout();
-            startActivity(new Intent(this, MainActivity.class));
+            Intent i = new Intent(this, MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
             finish();
         });
     }
