@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.project2group1.R;
 import com.example.project2group1.core.Prefs;
 import com.example.project2group1.data.AppDatabase;
@@ -15,92 +18,101 @@ import com.example.project2group1.data.UserRepository;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MODE = "mode";
-    public static final String MODE_LOGIN = "login";
-    public static final String MODE_CREATE = "create";
-
-    private UserRepository repo;
-    private Prefs prefs;
-
     private View groupLogin, groupCreate;
-    private EditText etUsernameLogin, etPasswordLogin, etUsernameCreate, etPasswordCreate;
-    private Button btnLogin, btnCreate, toggleMode;
-    private String mode = MODE_LOGIN;
+    private TextView title;
+    private Button toggleMode, btnLogin, btnCreate;
+    private EditText etUsernameLogin, etPasswordLogin;
+    private EditText etUsernameCreate, etPasswordCreate;
+
+    private boolean createMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        repo = new UserRepository(AppDatabase.get(this).userDao());
-        prefs = new Prefs(this);
-
+        // Wire up EXACT ids from activity_login.xml
+        title = findViewById(R.id.title);
         groupLogin = findViewById(R.id.groupLogin);
         groupCreate = findViewById(R.id.groupCreate);
-        etUsernameLogin = findViewById(R.id.etUsernameLogin);
-        etPasswordLogin = findViewById(R.id.etPasswordLogin);
-        etUsernameCreate = findViewById(R.id.etUsernameCreate);
-        etPasswordCreate = findViewById(R.id.etPasswordCreate);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnCreate = findViewById(R.id.btnCreate);
         toggleMode = findViewById(R.id.toggleMode);
 
-        String startMode = getIntent().getStringExtra(EXTRA_MODE);
-        if (startMode != null) mode = startMode;
-        setMode(mode);
+        etUsernameLogin = findViewById(R.id.etUsernameLogin);
+        etPasswordLogin = findViewById(R.id.etPasswordLogin);
+        btnLogin = findViewById(R.id.btnLogin);
 
-        toggleMode.setOnClickListener(v ->
-                setMode(mode.equals(MODE_LOGIN) ? MODE_CREATE : MODE_LOGIN));
+        etUsernameCreate = findViewById(R.id.etUsernameCreate);
+        etPasswordCreate = findViewById(R.id.etPasswordCreate);
+        btnCreate = findViewById(R.id.btnCreate);
 
-        btnLogin.setOnClickListener(v -> doLogin());
-        btnCreate.setOnClickListener(v -> doCreate());
-    }
+        // Start in login mode
+        applyMode(false);
 
-    private void setMode(String newMode) {
-        mode = newMode;
-        boolean isLogin = mode.equals(MODE_LOGIN);
-        groupLogin.setVisibility(isLogin ? View.VISIBLE : View.GONE);
-        groupCreate.setVisibility(isLogin ? View.GONE : View.VISIBLE);
-        toggleMode.setText(isLogin ? "Create an account instead" : "I already have an account");
-    }
+        toggleMode.setOnClickListener(v -> {
+            createMode = !createMode;
+            applyMode(createMode);
+        });
 
-    private void doLogin() {
-        new Thread(() -> {
-            try {
-                User user = repo.validateLogin(
-                        etUsernameLogin.getText().toString().trim(),
-                        etPasswordLogin.getText().toString().trim());
-                runOnUiThread(() -> {
-                    prefs.setLoggedIn(user.username, user.isAdmin);
-                    startActivity(new Intent(this, LandingPageActivity.class));
-                    finish();
-                });
-            } catch (Exception e) {
-                showToast(e.getMessage());
+        btnLogin.setOnClickListener(v -> {
+            String username = etUsernameLogin.getText().toString().trim();
+            String password = etPasswordLogin.getText().toString();
+            if (username.isEmpty() || password.isEmpty()) {
+                toast("Please fill in all fields");
+                return;
             }
-        }).start();
-    }
+            new Thread(() -> {
+                try {
+                    UserRepository repo =
+                            new UserRepository(AppDatabase.getInstance(getApplicationContext()).userDao());
+                    User u = repo.validateLogin(username, password);
+                    new Prefs(getApplicationContext()).setLoggedIn(u);
+                    runOnUiThread(() -> {
+                        toast("Welcome back!");
+                        startActivity(new Intent(this, LandingPageActivity.class));
+                        finish();
+                    });
+                } catch (Exception e) {
+                    toast(e.getMessage());
+                }
+            }).start();
+        });
 
-    private void doCreate() {
-        new Thread(() -> {
-            try {
-                repo.createUser(
-                        etUsernameCreate.getText().toString().trim(),
-                        etPasswordCreate.getText().toString().trim(),
-                        false);
-                runOnUiThread(() -> {
-                    prefs.setLoggedIn(etUsernameCreate.getText().toString().trim(), false);
-                    startActivity(new Intent(this, LandingPageActivity.class));
-                    finish();
-                });
-            } catch (Exception e) {
-                showToast(e.getMessage());
+        btnCreate.setOnClickListener(v -> {
+            String username = etUsernameCreate.getText().toString().trim();
+            String password = etPasswordCreate.getText().toString();
+            if (username.isEmpty() || password.isEmpty()) {
+                toast("Please fill in all fields");
+                return;
             }
-        }).start();
+            new Thread(() -> {
+                try {
+                    UserRepository repo =
+                            new UserRepository(AppDatabase.getInstance(getApplicationContext()).userDao());
+                    // No admin toggle in layout -> default new users to non-admin
+                    repo.createUser(username, password, false);
+                    User u = repo.validateLogin(username, password);
+                    new Prefs(getApplicationContext()).setLoggedIn(u);
+                    runOnUiThread(() -> {
+                        toast("Account created!");
+                        startActivity(new Intent(this, LandingPageActivity.class));
+                        finish();
+                    });
+                } catch (Exception e) {
+                    toast(e.getMessage());
+                }
+            }).start();
+        });
     }
 
-    private void showToast(String msg) {
-        runOnUiThread(() ->
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());
+    private void applyMode(boolean create) {
+        createMode = create;
+        groupCreate.setVisibility(create ? View.VISIBLE : View.GONE);
+        groupLogin.setVisibility(create ? View.GONE : View.VISIBLE);
+        title.setText(create ? R.string.create_account : R.string.login);
+        toggleMode.setText(create ? R.string.switch_to_login : R.string.switch_to_create);
+    }
+
+    private void toast(String msg) {
+        runOnUiThread(() -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());
     }
 }

@@ -2,6 +2,8 @@ package com.example.project2group1.core;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.example.project2group1.data.User;
+
 
 public class Prefs {
     private static final String PREF_NAME = "triviago_prefs";
@@ -15,11 +17,12 @@ public class Prefs {
         sp = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setLoggedIn(String username, boolean isAdmin) {
+    public void setLoggedIn(User user) {
+        if (user == null) return;
         sp.edit()
                 .putBoolean(KEY_LOGGED_IN, true)
-                .putString(KEY_USERNAME, username)
-                .putBoolean(KEY_IS_ADMIN, isAdmin)
+                .putString(KEY_USERNAME, user.username)
+                .putBoolean(KEY_IS_ADMIN, user.isAdmin)
                 .apply();
     }
 

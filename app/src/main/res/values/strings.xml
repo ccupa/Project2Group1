@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Trivia Go!</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create account</string>
+    <string name="switch_to_login">Already have an account? Log in</string>
+    <string name="switch_to_create">Create an account instead</string>
 </resources>
