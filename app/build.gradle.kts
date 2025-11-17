@@ -30,8 +30,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -45,8 +45,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.ext.junit)
+    implementation("androidx.room:room-runtime:2.7.0")
+    annotationProcessor("androidx.room:room-compiler:2.7.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

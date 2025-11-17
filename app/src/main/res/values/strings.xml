@@ -9,6 +9,5 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
     <string name="logout">Logout</string>
-    <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
     <string name="admin_area">Admin Area</string>
 </resources>

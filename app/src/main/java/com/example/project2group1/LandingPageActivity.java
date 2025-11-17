@@ -17,7 +17,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
         if (!prefs.getBoolean(Session.KEY_LOGGED_IN, false)) {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, LoginScreen.class));
             finish();
             return;
         }
@@ -26,5 +26,16 @@ public class LandingPageActivity extends AppCompatActivity {
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
+        tvWelcome.setText("Welcome, " + username);
+
+        Button btnAdmin = findViewById(R.id.btnAdmin);
+        btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
+
+        Button btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            prefs.edit().clear().apply();
+            startActivity(new Intent(this, LoginScreen.class));
+            finish();
+        });
     }
 }

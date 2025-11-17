@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
         if (prefs.getBoolean(Session.KEY_LOGGED_IN, false)) {
-            startActivity(new Intent(this, com.example.project2group1.LoginScreen.class));
+            startActivity(new Intent(this, com.example.project2group1.LandingPageActivity.class));
             finish();
             return;
         }
@@ -38,14 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        if(binding.loginButton != null){
-            binding.loginButton.setOnClickListener(v -> {
-                Intent i = new Intent(this, com.example.project2group1.LoginScreen.class);
-                startActivity(i);
-            });
-        }
-
     }
 
     static Intent mainActivityIntentFactory(Context context, String username) {

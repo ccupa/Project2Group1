@@ -76,7 +76,7 @@ public class LoginScreen extends AppCompatActivity {
                             .putBoolean(Session.KEY_IS_ADMIN, user.isAdmin)
                             .apply();
                     toastMaker("Welcome " + username);
-                    startActivity(new Intent(getApplicationContext(), LoginScreen.class));
+                    startActivity(new Intent(getApplicationContext(), LandingPageActivity.class));
                     finish();
                 } else {
                     toastMaker("Incorrect username or password");
