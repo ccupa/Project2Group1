@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import java.util.concurrent.Executors;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,27 +51,38 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void verifyUser() {
-        String testUsername = "Drew";
-        String testPassword = "password";
-
-        username = binding.usernameEditText.getText().toString();
-        password = binding.passwordEditText.getText().toString();
+        username = binding.usernameEditText.getText().toString().trim();
+        password = binding.passwordEditText.getText().toString().trim();
 
         if (username.isEmpty()){
             toastMaker("Username may not be blank");
             return;
         }
-        if (!(username.equals(testUsername))) {
-            toastMaker("Incorrect Username");
+        if (password.isEmpty()) {
+            toastMaker("Password may not be blank");
             return;
-        }
-        if (password.isEmpty() || (!password.equals(testPassword))){
-            toastMaker("Incorrect Password");
-            return;
-        }
-        toastMaker("Welcome " + username);
-        startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), username));
 
+        }
+        Executors.newSingleThreadExecutor().execute(() -> {
+            UserDao dao = AppDatabase.getInstance(getApplicationContext()).userDao();
+            User user = dao.findByUsername(username);
+
+            runOnUiThread(() -> {
+                if (user != null && password.equals(user.password)) {
+                    SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+                    prefs.edit()
+                            .putBoolean(Session.KEY_LOGGED_IN, true)
+                            .putString(Session.KEY_USERNAME, user.username)
+                            .putBoolean(Session.KEY_IS_ADMIN, user.isAdmin)
+                            .apply();
+                    toastMaker("Welcome " + username);
+                    startActivity(new Intent(getApplicationContext(), LoginScreen.class));
+                    finish();
+                } else {
+                    toastMaker("Incorrect username or password");
+                }
+            });
+        });
     }
 
     public static String getUserName() {
@@ -83,5 +96,4 @@ public class LoginScreen extends AppCompatActivity {
     public void toastMaker(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
 }

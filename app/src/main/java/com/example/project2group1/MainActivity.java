@@ -2,6 +2,7 @@ package com.example.project2group1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+        if (prefs.getBoolean(Session.KEY_LOGGED_IN, false)) {
+            startActivity(new Intent(this, com.example.project2group1.LoginScreen.class));
+            finish();
+            return;
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -30,7 +39,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        if(binding.loginButton != null){
+            binding.loginButton.setOnClickListener(v -> {
+                Intent i = new Intent(this, com.example.project2group1.LoginScreen.class);
+                startActivity(i);
+            });
+        }
 
     }
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Project2Group1</string>
     <string name="created_by_joseph_ramer_carlos_cupa_jack_bayless_and_joshua_chavez">Created by: Joseph Ramer, Carlos Cupa, Jack Bayless, and Joshua Chavez</string>
     <string name="welcome_to_trivia_go">Welcome to Trivia GO</string>
@@ -7,4 +7,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="leaderboard">Leaderboard</string>
+    <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
+    <string name="logout">Logout</string>
+    <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
+    <string name="admin_area">Admin Area</string>
 </resources>
