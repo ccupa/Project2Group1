@@ -40,11 +40,14 @@ public class LandingPageActivity extends AppCompatActivity {
         tvRole.setText(isAdmin ? "Role: Admin" : "Role: User");
 
         // Show admin button only for admins
+
         btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.GONE);
+        //Added in the AdminActivity
+
         btnAdmin.setOnClickListener(v -> {
-            // TODO: start your real AdminActivity when you add it
-            tvRole.setText("Role: Admin • Admin area tapped");
+            startActivity(new Intent(this, AdminActivity.class));
         });
+
 
         // Logout: clear prefs and return to MainActivity
         btnLogout.setOnClickListener(v -> {

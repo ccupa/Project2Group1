@@ -5,8 +5,11 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.List;
+
 @Dao
 public interface UserDao {
+
     @Insert(onConflict = OnConflictStrategy.ABORT)
     void insert(User user);
 
@@ -18,4 +21,8 @@ public interface UserDao {
 
     @Query("UPDATE users SET isAdmin = 1 WHERE username = :username")
     void makeAdmin(String username);
+
+    // REQUIRED for AdminActivity
+    @Query("SELECT * FROM users")
+    List<User> getAllUsers();
 }
