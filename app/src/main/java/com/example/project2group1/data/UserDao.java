@@ -22,7 +22,7 @@ public interface UserDao {
     @Query("UPDATE users SET isAdmin = 1 WHERE username = :username")
     void makeAdmin(String username);
 
-    // REQUIRED for AdminActivity
+    // Will use later in the AdminActivity to list out all the previous users
     @Query("SELECT * FROM users")
     List<User> getAllUsers();
 }
