@@ -10,4 +10,5 @@
     <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
     <string name="logout">Logout</string>
     <string name="admin_area">Admin Area</string>
+    <string name="geography">Geography</string>
 </resources>
