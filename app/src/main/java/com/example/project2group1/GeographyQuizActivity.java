@@ -23,7 +23,7 @@ public class GeographyQuizActivity extends AppCompatActivity{
 
     TextView questionTextView;
     TextView scoreTextView;
-    TextView counterTextVIew;
+    TextView counterTextView;
 
     Button answerButton1;
     Button answerButton2;
@@ -43,7 +43,7 @@ public class GeographyQuizActivity extends AppCompatActivity{
 
         questionTextView = findViewById(R.id.tvQuestion);
         scoreTextView = findViewById(R.id.tvScore);
-        counterTextVIew = findViewById(R.id.tvCounter);
+        counterTextView = findViewById(R.id.tvCounter);
 
         answerButton1 = findViewById(R.id.btnAnswer1);
         answerButton2 = findViewById(R.id.btnAnswer2);
@@ -141,9 +141,38 @@ public class GeographyQuizActivity extends AppCompatActivity{
     }
 
     private void showQuestion() {
+        if (currentIndex < 0 || currentIndex >= questionList.size()) {
+            return;
+        }
+
+        Question q = questionList.get(currentIndex);
+        currentCorrectAnswer = q.correctAnswer;
+
+        scoreTextView.setText("Score: " + score);;
+        counterTextView.setText("Question " + (currentIndex + 1) + " / " + questionList.size());
+
+        answerButton1.setVisibility(View.VISIBLE);
+        answerButton2.setVisibility(View.VISIBLE);
+        answerButton3.setVisibility(View.VISIBLE);
+        answerButton4.setVisibility(View.VISIBLE);
+        nextButton.setVisibility(View.VISIBLE);
+
+        answerButton1.setText(q.answerList.get(0));
+        answerButton2.setText(q.answerList.get(1));
+        answerButton3.setText(q.answerList.get(2));
+        answerButton4.setText(q.answerList.get(3));
     }
 
     private void checkAnswer(CharSequence text) {
+        String chosen = text.toString();
+        if(chosen.equals(currentCorrectAnswer)) {
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            score++;
+            scoreTextView.setText("Score: " + score);
+        } else {
+            Toast.makeText(this, "Wrong! Correct Answer was: " + currentCorrectAnswer, Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 }
