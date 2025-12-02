@@ -148,6 +148,8 @@ public class GeographyQuizActivity extends AppCompatActivity{
         Question q = questionList.get(currentIndex);
         currentCorrectAnswer = q.correctAnswer;
 
+        questionTextView.setText(q.questionText);
+
         scoreTextView.setText("Score: " + score);;
         counterTextView.setText("Question " + (currentIndex + 1) + " / " + questionList.size());
 
