@@ -11,22 +11,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2Group1">
+
         <activity
             android:name=".JacksActivity"
             android:exported="false" />
-        <!-- Switched Main Activity and LoginScreen on name to make login screen appear first -->
+
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+
         <activity
             android:name=".LandingPageActivity"
             android:exported="true" />
+
         <activity
             android:name=".LoginScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

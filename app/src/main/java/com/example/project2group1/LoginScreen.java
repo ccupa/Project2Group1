@@ -37,9 +37,10 @@ public class LoginScreen extends AppCompatActivity {
         binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMaker("Working on it");
+                startActivity(SignUpActivity.signUpIntentFactory(LoginScreen.this));
             }
         });
+
 
         binding.skipLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
