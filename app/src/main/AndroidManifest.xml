@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2Group1">
         <activity
+            android:name=".GeographyQuizActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".JacksActivity"
             android:exported="false" />
         <!-- Switched Main Activity and LoginScreen on name to make login screen appear first -->
