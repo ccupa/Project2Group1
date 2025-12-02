@@ -94,20 +94,50 @@ public class GeographyQuizActivity extends AppCompatActivity{
                 JSONObject root = new JSONObject(jsonString);
                 JSONArray resultsArray = root.getJSONArray("results");
 
-                ArrayList<Questiion> tempList = new ArrayList<>();
+                ArrayList<Question> tempList = new ArrayList<>();
 
                 for (int i = 0; i < resultsArray.length(); i++) {
                     JSONObject obj = resultsArray.getJSONObject(i);
                     String question = htmlDecode(obj.getString("question"));
-                    String correcct = htmlDecode(obj.getString("correcr_answer"));
+                    String correct = htmlDecode(obj.getString("correct_answer"));
 
+                    JSONArray incorrectArray = obj.getJSONArray("incorrect_answers");
+                    ArrayList<String> answers = new ArrayList<>();
+                    answers.add(correct);
+                    for (int j = 0; j < incorrectArray.length(); j++) {
+                        answers.add(htmlDecode(incorrectArray.getString(j)));
+                    }
+                    Collections.shuffle(answers);
 
+                    Question q = new Question();
+                    q.questionText = question;
+                    q.correctAnswer = correct;
+                    q.answerList = answers;
+                    tempList.add(q);
                 }
+
+                runOnUiThread(() -> {
+                    questionList.clear();
+                    questionList.addAll(tempList);
+                    currentIndex = 0;
+                    score = 0;
+
+                    if (questionList.size() > 0) {
+                        showQuestion();
+                    } else {
+                        Toast.makeText(GeographyQuizActivity.this, "No questions found", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(GeographyQuizActivity.this, "Error loading questions", Toast.LENGTH_SHORT).show());
             }
-        })
+        }).start();
     }
 
-    private String htmlDecode(String question) {
+    private String htmlDecode(String text) {
+        return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
     private void showQuestion() {
