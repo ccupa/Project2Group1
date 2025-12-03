@@ -37,10 +37,22 @@ public class LandingPageActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginScreen.class));
             finish();
         });
+//        Button adminBTN = findViewById(R.id.tvWelcome);
+//        adminBTN.setOnClickListener(v ->
+//                startActivity(new Intent(this, GeographyQuizActivity.class)));
 
+        //-------------//
         Button geoBtn = findViewById(R.id.carlosTriviaButton);
         geoBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, GeographyQuizActivity.class)));
+        //-------------//
+        Button other_Btn = findViewById(R.id.jackTriviaButton);
+        other_Btn.setOnClickListener(v ->
+                startActivity(new Intent(this, JacksTriviaQuestions.class)));
+        //-------------//
+        Button computer_Science = findViewById(R.id.joshTriviaButton);
+        computer_Science.setOnClickListener(v ->
+                startActivity(new Intent(this, CSQuizActivity.class)));
 
     }
 }

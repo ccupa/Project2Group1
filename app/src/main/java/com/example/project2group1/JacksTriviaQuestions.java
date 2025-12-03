@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class JacksActivity extends AppCompatActivity {
+public class JacksTriviaQuestions extends AppCompatActivity {
 
     ActivityJacksBinding binding;
     String [][] answers = new String[10][5]; // ten questions, 4 possible answers + the question
@@ -245,7 +245,7 @@ public class JacksActivity extends AppCompatActivity {
     }
 
     static Intent jackIntentFactory(Context context) {
-        return new Intent(context, JacksActivity.class);
+        return new Intent(context, JacksTriviaQuestions.class);
     }
 
     public void toastMaker(String message){
