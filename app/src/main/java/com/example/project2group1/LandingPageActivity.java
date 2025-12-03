@@ -37,5 +37,10 @@ public class LandingPageActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginScreen.class));
             finish();
         });
+
+        Button geoBtn = findViewById(R.id.carlosTriviaButton);
+        geoBtn.setOnClickListener(v ->
+                startActivity(new Intent(this, GeographyQuizActivity.class)));
+
     }
 }

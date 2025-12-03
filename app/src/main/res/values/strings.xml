@@ -10,4 +10,14 @@
     <string name="welcome" tools:ignore="DuplicateDefinition">Welcome!</string>
     <string name="logout">Logout</string>
     <string name="admin_area">Admin Area</string>
+    <string name="geography">Geography</string>
+    <string name="questiom_1_5">Questiom 1 / 5</string>
+    <string name="next_question">Next Question</string>
+    <string name="answer_4">Answer 4</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="questions_here">Questions here</string>
+    <string name="score_0">Score: 0</string>
+    <string name="question_1_5">Question 1 / 5</string>
 </resources>
