@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class JacksActivity extends AppCompatActivity {
+public class JacksTriviaQuestions extends AppCompatActivity {
 
     ActivityJacksBinding binding;
     String [][] answers = new String[10][5]; // ten questions, 4 possible answers + the question
@@ -106,6 +106,8 @@ public class JacksActivity extends AppCompatActivity {
             LeaderboardEntity user = dao.getByUsername(username);
             if (user == null) return;
 
+            if (score <= user.jackTriviaScore) return;
+
             user.jackTriviaScore = score;
 
             user.totalScore =
@@ -130,10 +132,11 @@ public class JacksActivity extends AppCompatActivity {
 
         String scorePlaceHolder = String.valueOf(score);
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
+        updateLeaderboardScore(score);
 
         binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
         binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1
-        binding.answerBottomLeftButton.setText(("Back")); // userExitClick = 2
+        binding.answerBottomLeftButton.setText("Back"); // userExitClick = 2
         binding.answerBottomRightButton.setText("Play Again"); // userExitClick = 3
 
        roundOver = true;
@@ -168,7 +171,6 @@ public class JacksActivity extends AppCompatActivity {
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
-                updateLeaderboardScore(score);
                 toastMaker("New High Score!!!");
                 highScore = score;
             }
@@ -273,7 +275,7 @@ public class JacksActivity extends AppCompatActivity {
     }
 
     static Intent jackIntentFactory(Context context) {
-        return new Intent(context, JacksActivity.class);
+        return new Intent(context, JacksTriviaQuestions.class);
     }
 
     public void toastMaker(String message){

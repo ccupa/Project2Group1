@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toastMaker("Clicked");
-                Intent intent = JacksActivity.jackIntentFactory(getApplicationContext());
+                Intent intent = JacksTriviaQuestions.jackIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });

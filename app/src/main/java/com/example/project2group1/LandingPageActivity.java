@@ -34,7 +34,15 @@ public class LandingPageActivity extends AppCompatActivity {
         tvWelcome.setText("Welcome, " + username);
 
         Button btnAdmin = findViewById(R.id.btnAdmin);
-        btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
+        if (isAdmin) {
+            btnAdmin.setVisibility(View.VISIBLE);
+            btnAdmin.setOnClickListener(v ->
+                    startActivity(new Intent(this, AdminActivity.class))
+            );
+        } else {
+            // You can use INVISIBLE if you want the space to remain
+            btnAdmin.setVisibility(View.GONE);
+        }
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
@@ -48,10 +56,15 @@ public class LandingPageActivity extends AppCompatActivity {
         Button geoBtn = findViewById(R.id.carlosTriviaButton);
         geoBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, GeographyQuizActivity.class)));
-
+        //-------------//
         Button basketballBtn = findViewById(R.id.jackTriviaButton);
         basketballBtn.setOnClickListener(v ->
-                startActivity(JacksActivity.jackIntentFactory(getApplicationContext())));
+                startActivity(new Intent(this, JacksTriviaQuestions.class)));
+        //-------------//
+        Button computer_Science = findViewById(R.id.joshTriviaButton);
+        computer_Science.setOnClickListener(v ->
+                startActivity(new Intent(this, CSQuizActivity.class)));
+
 
         Button leaderboardBtn = findViewById(R.id.leaderboardButton);
         leaderboardBtn.setOnClickListener(v ->

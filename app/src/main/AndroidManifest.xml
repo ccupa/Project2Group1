@@ -13,30 +13,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2Group1">
+
+        <activity
+            android:name=".GeographyQuizActivity"
+            android:exported="false"/>
+
         <activity
             android:name=".LeaderBoard"
             android:exported="false" />
+
+
         <activity
-            android:name=".GeographyQuizActivity"
+            android:name=".JacksTriviaQuestions"
             android:exported="false" />
         <activity
-            android:name=".JacksActivity"
+            android:name=".CSQuizActivity"
             android:exported="false" />
+
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
+
         <activity
             android:name=".LandingPageActivity"
             android:exported="true" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+
         <activity
             android:name=".LoginScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
