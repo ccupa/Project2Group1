@@ -79,7 +79,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
         if (buttonClicked == correctIndex){
             toastMaker("Correct!!");
-            score += 50;
+            score += 1;
         }
         else {
             toastMaker("Incorrect :(");
@@ -95,6 +95,33 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    private void updateLeaderboardScore(int score) {
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            if (score <= user.jackTriviaScore) return;
+
+            user.jackTriviaScore = score;
+
+            user.totalScore =
+                            user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+
+        });
+
+    }
+
 
 
     @SuppressLint("SetTextI18n")
@@ -105,29 +132,37 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
         String scorePlaceHolder = String.valueOf(score);
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
+        updateLeaderboardScore(score);
 
         binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
         binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1
-        binding.answerBottomLeftButton.setText(("Back")); // userExitClick = 2
+        binding.answerBottomLeftButton.setText("Back"); // userExitClick = 2
         binding.answerBottomRightButton.setText("Play Again"); // userExitClick = 3
 
        roundOver = true;
     }
 
+    @SuppressLint("SetTextI18n")
     private void endGameView(int userExitClicked) {
 
         if (userExitClicked == 0) {
-            toastMaker("Logging out is work in progress");
+            startActivity(LoginScreen.loginIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 1) {
-            toastMaker("Leaderboard work in progress");
+            startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 2) {
             startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), LoginScreen.getUserName()));
         }
         else if (userExitClicked == 3) {
+
+            binding.questionHeaderTextView.setText("Question: ");
+            binding.scoreTextView.setText("Score: ");
+            binding.actualScoreTextView.setText("0");
+
             currentIndex = 0;
             score = 0;
+            roundOver = false;
 
             showQuestion(currentIndex);
         }
@@ -140,10 +175,14 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     public void showQuestion(int index) {
 
         if (index >= answers.length) {
+
+            binding.displayQuestionCountTextView.setText("");
+            binding.questionHeaderTextView.setText("");
+
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
-               toastMaker("New High Score!!!");
+                toastMaker("New High Score!!!");
                 highScore = score;
             }
            // binding.questionTextView.setText("High Score: " + highScore);
@@ -151,19 +190,24 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             endGameView();
         }
 
-        String[] question = answers[index];
-        binding.questionTextView.setText(question[0]);
+        else {
 
-        ArrayList<String> choices = new ArrayList<>();
-        for (int i = 1; i < question.length;i++) choices.add(question[i]);
-        Collections.shuffle(choices);
-        correctIndex = choices.indexOf(question[1]);
+            String questionCount = (index + 1) + "/10";
+            binding.displayQuestionCountTextView.setText(questionCount);
 
-        binding.answerTopLeftButton.setText(choices.get(0));
-        binding.answerTopRightButton.setText(choices.get(1));
-        binding.answerBottomLeftButton.setText(choices.get(2));
-        binding.answerBottomRightButton.setText(choices.get(3));
+            String[] question = answers[index];
+            binding.questionTextView.setText(question[0]);
 
+            ArrayList<String> choices = new ArrayList<>();
+            for (int i = 1; i < question.length; i++) choices.add(question[i]);
+            Collections.shuffle(choices);
+            correctIndex = choices.indexOf(question[1]);
+
+            binding.answerTopLeftButton.setText(choices.get(0));
+            binding.answerTopRightButton.setText(choices.get(1));
+            binding.answerBottomLeftButton.setText(choices.get(2));
+            binding.answerBottomRightButton.setText(choices.get(3));
+        }
     }
 
     // plan to modify this later to get the questions from an API, but for now this will have to do
