@@ -1,6 +1,7 @@
 package com.example.project2group1;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
@@ -16,6 +17,7 @@ public class LeaderboardEntity {
     public int joeTriviaScore;
     public int totalScore;
 
+    @Ignore // admin use if necessary
     public LeaderboardEntity(String username, int jackTriviaScore, int carlosTriviaScore, int joshTriviaScore, int joeTriviaScore, int totalScore) {
         this.username = username;
         this.jackTriviaScore = jackTriviaScore;

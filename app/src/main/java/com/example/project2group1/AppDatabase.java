@@ -2,6 +2,7 @@ package com.example.project2group1;
 
 import android.content.Context;
 
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -11,9 +12,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, LeaderboardEntity.class}, version = 1, exportSchema = false)
+
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
+    public abstract LeaderboardDao leaderboardDao();
 
     private static volatile AppDatabase INSTANCE;
     private static final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
