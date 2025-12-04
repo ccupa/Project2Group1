@@ -169,4 +169,3 @@ public class PokemonQuizActivity extends AppCompatActivity {
         }
     }
 }
-}

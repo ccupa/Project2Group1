@@ -59,5 +59,12 @@ public class LandingPageActivity extends AppCompatActivity {
         computer_Science.setOnClickListener(v ->
                 startActivity(new Intent(this, CSQuizActivity.class)));
 
+        //-------------//
+        Button josephButton = findViewById(R.id.josephTriviaButton);
+        josephButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LandingPageActivity.this, PokemonQuizActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
