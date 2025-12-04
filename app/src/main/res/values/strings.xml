@@ -26,4 +26,5 @@
     <string name="total_score">Total Score:</string>
     <string name="exit">Exit</string>
     <string name="welcometotriviago">Welcome to Trivia Go!</string>
+    <string name="question">Question:</string>
 </resources>
