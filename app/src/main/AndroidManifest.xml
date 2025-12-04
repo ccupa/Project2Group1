@@ -19,6 +19,11 @@
             android:exported="false"/>
 
         <activity
+            android:name=".LeaderBoard"
+            android:exported="false" />
+
+
+        <activity
             android:name=".JacksTriviaQuestions"
             android:exported="false" />
         <activity

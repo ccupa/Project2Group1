@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LandingPageActivity extends AppCompatActivity {
+
+    private static String un; //username
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +27,7 @@ public class LandingPageActivity extends AppCompatActivity {
         }
 
         String username = prefs.getString(Session.KEY_USERNAME, "");
+        un = username;
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
@@ -46,18 +51,33 @@ public class LandingPageActivity extends AppCompatActivity {
             finish();
         });
 
-        //-------------//
+        //TODO
+        //change to intent factory or else might get credit off
         Button geoBtn = findViewById(R.id.carlosTriviaButton);
         geoBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, GeographyQuizActivity.class)));
         //-------------//
-        Button other_Btn = findViewById(R.id.jackTriviaButton);
-        other_Btn.setOnClickListener(v ->
+        Button basketballBtn = findViewById(R.id.jackTriviaButton);
+        basketballBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, JacksTriviaQuestions.class)));
         //-------------//
         Button computer_Science = findViewById(R.id.joshTriviaButton);
         computer_Science.setOnClickListener(v ->
                 startActivity(new Intent(this, CSQuizActivity.class)));
 
+
+        Button leaderboardBtn = findViewById(R.id.leaderboardButton);
+        leaderboardBtn.setOnClickListener(v ->
+                startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext())));
+
     }
+
+    public static String getUsername() {
+        return un;
+    }
+
+    static Intent landingPageIntentFactory(Context context) {
+        return new Intent(context, LandingPageActivity.class);
+    }
+
 }

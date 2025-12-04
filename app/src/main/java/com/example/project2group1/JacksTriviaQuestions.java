@@ -95,6 +95,33 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    private void updateLeaderboardScore(int score) {
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            if (score <= user.jackTriviaScore) return;
+
+            user.jackTriviaScore = score;
+
+            user.totalScore =
+                            user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+
+        });
+
+    }
+
 
 
     @SuppressLint("SetTextI18n")
@@ -105,10 +132,11 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
         String scorePlaceHolder = String.valueOf(score);
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
+        updateLeaderboardScore(score);
 
         binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
         binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1
-        binding.answerBottomLeftButton.setText(("Back")); // userExitClick = 2
+        binding.answerBottomLeftButton.setText("Back"); // userExitClick = 2
         binding.answerBottomRightButton.setText("Play Again"); // userExitClick = 3
 
        roundOver = true;
@@ -117,10 +145,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     private void endGameView(int userExitClicked) {
 
         if (userExitClicked == 0) {
-            toastMaker("Logging out is work in progress");
+            startActivity(LoginScreen.loginIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 1) {
-            toastMaker("Leaderboard work in progress");
+            startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 2) {
             startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), LoginScreen.getUserName()));
@@ -143,7 +171,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
-               toastMaker("New High Score!!!");
+                toastMaker("New High Score!!!");
                 highScore = score;
             }
            // binding.questionTextView.setText("High Score: " + highScore);
@@ -151,19 +179,21 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             endGameView();
         }
 
-        String[] question = answers[index];
-        binding.questionTextView.setText(question[0]);
+        else {
 
-        ArrayList<String> choices = new ArrayList<>();
-        for (int i = 1; i < question.length;i++) choices.add(question[i]);
-        Collections.shuffle(choices);
-        correctIndex = choices.indexOf(question[1]);
+            String[] question = answers[index];
+            binding.questionTextView.setText(question[0]);
 
-        binding.answerTopLeftButton.setText(choices.get(0));
-        binding.answerTopRightButton.setText(choices.get(1));
-        binding.answerBottomLeftButton.setText(choices.get(2));
-        binding.answerBottomRightButton.setText(choices.get(3));
+            ArrayList<String> choices = new ArrayList<>();
+            for (int i = 1; i < question.length; i++) choices.add(question[i]);
+            Collections.shuffle(choices);
+            correctIndex = choices.indexOf(question[1]);
 
+            binding.answerTopLeftButton.setText(choices.get(0));
+            binding.answerTopRightButton.setText(choices.get(1));
+            binding.answerBottomLeftButton.setText(choices.get(2));
+            binding.answerBottomRightButton.setText(choices.get(3));
+        }
     }
 
     // plan to modify this later to get the questions from an API, but for now this will have to do
