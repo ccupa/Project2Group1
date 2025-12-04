@@ -29,4 +29,14 @@ public class PokemonQuizActivity extends AppCompatActivity {
     private String currentCorrectAnswer;
 
     private Random random = new Random();
+
+    // Basic list of Pokémon types for fake answers
+    private static final ArrayList<String> ALL_TYPES = new ArrayList<>(
+            Arrays.asList(
+                    "normal", "fire", "water", "grass", "electric",
+                    "ice", "fighting", "poison", "ground", "flying",
+                    "psychic", "bug", "rock", "ghost", "dark",
+                    "dragon", "steel", "fairy"
+            )
+    );
 }
