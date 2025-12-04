@@ -238,12 +238,14 @@ public class JacksTriviaQuestions extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     toastMaker("Bad response from api");
                     toastMaker(String.valueOf(response.code()));
+                    loadQuestions_backup("basketball_trivia_2004_present.csv");
                     return;
                 }
 
                 List<TriviaQuestion> results = response.body();
                 if (results == null) {
                     toastMaker("No questions received");
+                    loadQuestions_backup("basketball_trivia_2004_present.csv");
                     return;
                 }
 
@@ -269,7 +271,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TriviaQuestion>> call, Throwable throwable) {
-
+                loadQuestions_backup("basketball_trivia_2004_present.csv");
             }
         });
 
