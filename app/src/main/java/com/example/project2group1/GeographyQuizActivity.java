@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -30,6 +31,7 @@ public class GeographyQuizActivity extends AppCompatActivity{
     Button answerButton3;
     Button answerButton4;
     Button nextButton;
+    Button backToMenuButton;
 
     ArrayList<Question> questionList = new ArrayList<>();
     int currentIndex = 0;
@@ -50,6 +52,8 @@ public class GeographyQuizActivity extends AppCompatActivity{
         answerButton3 = findViewById(R.id.btnAnswer3);
         answerButton4 = findViewById(R.id.btnAnswer4);
         nextButton = findViewById(R.id.btnNextQuestion);
+        backToMenuButton = findViewById(R.id.btnBackToMenu);
+        backToMenuButton.setVisibility(View.INVISIBLE);
 
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
@@ -67,7 +71,16 @@ public class GeographyQuizActivity extends AppCompatActivity{
                     answerButton3.setVisibility(View.INVISIBLE);
                     answerButton4.setVisibility(View.INVISIBLE);
                     nextButton.setVisibility(View.INVISIBLE);
+
+                    backToMenuButton.setVisibility(View.VISIBLE);
+
                 }
+        });
+
+        backToMenuButton.setOnClickListener(v -> {
+            Intent i = new Intent(GeographyQuizActivity.this, LandingPageActivity.class);
+            startActivity(i);
+            finish();
         });
 
         loadQuestionsApi();
