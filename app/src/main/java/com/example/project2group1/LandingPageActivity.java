@@ -29,7 +29,15 @@ public class LandingPageActivity extends AppCompatActivity {
         tvWelcome.setText("Welcome, " + username);
 
         Button btnAdmin = findViewById(R.id.btnAdmin);
-        btnAdmin.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
+        if (isAdmin) {
+            btnAdmin.setVisibility(View.VISIBLE);
+            btnAdmin.setOnClickListener(v ->
+                    startActivity(new Intent(this, AdminActivity.class))
+            );
+        } else {
+            // You can use INVISIBLE if you want the space to remain
+            btnAdmin.setVisibility(View.GONE);
+        }
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
@@ -37,9 +45,6 @@ public class LandingPageActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginScreen.class));
             finish();
         });
-//        Button adminBTN = findViewById(R.id.tvWelcome);
-//        adminBTN.setOnClickListener(v ->
-//                startActivity(new Intent(this, GeographyQuizActivity.class)));
 
         //-------------//
         Button geoBtn = findViewById(R.id.carlosTriviaButton);

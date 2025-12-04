@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Project2Group1</string>
     <string name="created_by_joseph_ramer_carlos_cupa_jack_bayless_and_joshua_chavez">Created by: Joseph Ramer, Carlos Cupa, Jack Bayless, and Joshua Chavez</string>
-    <string name="welcome_to_trivia_go">Welcome to Trivia GO</string>
+    <string name="we">Welcome to Trivia GO</string>
     <string name="click_here_to_login">Click Here to Login</string>
     <string name="click_here_to_sign_up">Click Here to Sign Up</string>
     <string name="username">Username</string>
@@ -20,4 +20,6 @@
     <string name="questions_here">Questions here</string>
     <string name="score_0">Score: 0</string>
     <string name="question_1_5">Question 1 / 5</string>
+    <string name="welcome_to_trivia_go">welcome_to_trivia_go!</string>
+    <string name="welcometotriviago">Welcome to Trivia Go!</string>
 </resources>
