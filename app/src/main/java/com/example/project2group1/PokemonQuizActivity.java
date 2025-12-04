@@ -72,4 +72,74 @@ public class PokemonQuizActivity extends AppCompatActivity {
 
         loadNewPokemonQuestion();
     }
+
+    private void loadNewPokemonQuestion() {
+        tvQuestion.setText("Loading Pokémon...");
+
+        // Run network code on a background thread
+        new Thread(() -> {
+            try {
+                // Pick a random Pokémon ID (1–151 for Gen 1, change range if you want)
+                int id = random.nextInt(151) + 1;
+                URL url = new URL("https://pokeapi.co/api/v2/pokemon/" + id);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(conn.getInputStream())
+                );
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                reader.close();
+
+                String json = builder.toString();
+                JSONObject root = new JSONObject(json);
+
+                String name = root.getString("name"); // e.g. "pikachu"
+                JSONArray typesArray = root.getJSONArray("types");
+                // Get the first type as the "main" type
+                JSONObject firstTypeObj = typesArray.getJSONObject(0)
+                        .getJSONObject("type");
+                String typeName = firstTypeObj.getString("name"); // e.g. "electric"
+
+                currentCorrectAnswer = capitalize(typeName);
+
+                // Build answer choices
+                ArrayList<String> options = new ArrayList<>();
+                options.add(currentCorrectAnswer);
+
+                // Add 3 random wrong types
+                ArrayList<String> shuffledTypes = new ArrayList<>(ALL_TYPES);
+                Collections.shuffle(shuffledTypes);
+                for (String t : shuffledTypes) {
+                    String cap = capitalize(t);
+                    if (!cap.equals(currentCorrectAnswer)) {
+                        options.add(cap);
+                    }
+                    if (options.size() == 4) break;
+                }
+
+                Collections.shuffle(options);
+
+                runOnUiThread(() -> {
+                    tvQuestion.setText("What is the main type of " + capitalize(name) + "?");
+                    tvCounter.setText("Question: " + questionNumber + "/5");
+
+                    btnAnswer1.setText(options.get(0));
+                    btnAnswer2.setText(options.get(1));
+                    btnAnswer3.setText(options.get(2));
+                    btnAnswer4.setText(options.get(3));
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() ->
+                        tvQuestion.setText("Error loading Pokémon. Check your internet.")
+                );
+            }
+        }).start();
+    }
 }
