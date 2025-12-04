@@ -75,6 +75,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/questionHeaderTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="36dp"
+        android:gravity="center_vertical"
+        android:text="@string/question"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoreTextView" />
+
+    <TextView
         android:id="@+id/actualScoreTextView"
         android:layout_width="82dp"
         android:layout_height="35dp"
@@ -84,6 +95,16 @@
         android:textSize="24dp"
         app:layout_constraintStart_toEndOf="@+id/scoreTextView"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/displayQuestionCountTextView"
+        android:layout_width="82dp"
+        android:layout_height="35dp"
+        android:gravity="center_vertical"
+        android:text=""
+        android:textSize="24dp"
+        app:layout_constraintStart_toEndOf="@+id/questionHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/actualScoreTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

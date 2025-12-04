@@ -79,7 +79,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
         if (buttonClicked == correctIndex){
             toastMaker("Correct!!");
-            score += 50;
+            score += 1;
         }
         else {
             toastMaker("Incorrect :(");
@@ -142,6 +142,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
        roundOver = true;
     }
 
+    @SuppressLint("SetTextI18n")
     private void endGameView(int userExitClicked) {
 
         if (userExitClicked == 0) {
@@ -154,8 +155,14 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), LoginScreen.getUserName()));
         }
         else if (userExitClicked == 3) {
+
+            binding.questionHeaderTextView.setText("Question: ");
+            binding.scoreTextView.setText("Score: ");
+            binding.actualScoreTextView.setText("0");
+
             currentIndex = 0;
             score = 0;
+            roundOver = false;
 
             showQuestion(currentIndex);
         }
@@ -168,6 +175,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     public void showQuestion(int index) {
 
         if (index >= answers.length) {
+
+            binding.displayQuestionCountTextView.setText("");
+            binding.questionHeaderTextView.setText("");
+
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
@@ -180,6 +191,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         }
 
         else {
+
+            String questionCount = (index + 1) + "/10";
+            binding.displayQuestionCountTextView.setText(questionCount);
 
             String[] question = answers[index];
             binding.questionTextView.setText(question[0]);
