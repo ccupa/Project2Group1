@@ -50,7 +50,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="36dp"
-        android:text="Joseph"
+        android:text="Pokémon!"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseYourTriviaTextView" />
