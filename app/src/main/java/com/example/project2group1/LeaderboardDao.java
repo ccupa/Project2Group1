@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -19,18 +20,22 @@ public interface LeaderboardDao {
 
     // Get leaderboard sorted by totalScore DESC
     @Query("SELECT * FROM leaderboard ORDER BY totalScore DESC")
-    List<LeaderboardEntity> getAllSorted();
+    LiveData<List<LeaderboardEntity>> getAllSorted();
 
     @Query("SELECT * FROM leaderboard ORDER BY totalScore DESC LIMIT :limit")
-    List<LeaderboardEntity> getTop(int limit);
+    LiveData<List<LeaderboardEntity>> getTop(int limit);
 
     // Get a single user's row
     @Query("SELECT * FROM leaderboard WHERE username = :username LIMIT 1")
     LeaderboardEntity getByUsername(String username);
 
-    // Delete everything (optional)
+    // Delete everything
     @Query("DELETE FROM leaderboard")
     void clearLeaderboard();
+
+    @Query("SELECT COUNT(*) FROM leaderboard")
+    int getCount();
+
 
 
 
