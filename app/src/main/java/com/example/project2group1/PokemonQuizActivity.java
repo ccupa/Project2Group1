@@ -25,13 +25,13 @@ public class PokemonQuizActivity extends AppCompatActivity {
     private static final int TOTAL_QUESTIONS = 10;
 
     private TextView tvCounter, tvScore, tvQuestion;
-    private Button btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, btnNextQuestion, btnBackToMenu;
+    private Button btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, btnBackToMenu;
 
     private int questionNumber = 1;
     private int score = 0;
     private String currentCorrectAnswer;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     // List of all Pokémon types used for fake answers
     private static final ArrayList<String> ALL_TYPES = new ArrayList<>(
@@ -46,7 +46,6 @@ public class PokemonQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Reuse the same layout as geography quiz
         setContentView(R.layout.activity_pokemon_quiz);
 
         tvCounter = findViewById(R.id.tvCounter);
@@ -57,38 +56,24 @@ public class PokemonQuizActivity extends AppCompatActivity {
         btnAnswer2 = findViewById(R.id.btnAnswer2);
         btnAnswer3 = findViewById(R.id.btnAnswer3);
         btnAnswer4 = findViewById(R.id.btnAnswer4);
-        btnNextQuestion = findViewById(R.id.btnNextQuestion);
-        btnBackToMenu = findViewById(R.id.btnBackToMenu);   // NEW BUTTON
+        btnBackToMenu = findViewById(R.id.btnBackToMenu);
 
         tvScore.setText("Score: " + score);
         tvCounter.setText("Question: " + questionNumber + "/" + TOTAL_QUESTIONS);
 
-        // Answer button listeners
-        btnAnswer1.setOnClickListener(v -> checkAnswer(btnAnswer1.getText()));
-        btnAnswer2.setOnClickListener(v -> checkAnswer(btnAnswer2.getText()));
-        btnAnswer3.setOnClickListener(v -> checkAnswer(btnAnswer3.getText()));
-        btnAnswer4.setOnClickListener(v -> checkAnswer(btnAnswer4.getText()));
-
-        // Next question button
-        btnNextQuestion.setOnClickListener(v -> {
-            if (questionNumber < TOTAL_QUESTIONS) {
-                questionNumber++;
-                tvCounter.setText("Question: " + questionNumber + "/" + TOTAL_QUESTIONS);
-                loadNewPokemonQuestion();
-            } else {
-                tvQuestion.setText("Quiz finished! Final score: " + score + "/" + TOTAL_QUESTIONS);
-                Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show();
-                btnNextQuestion.setEnabled(false);
-            }
-        });
-
-        // Back to quiz selection (LandingPageActivity)
+        // Back button only visible at the very end (also set to GONE in XML)
         btnBackToMenu.setOnClickListener(v -> {
             Intent intent = new Intent(PokemonQuizActivity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
         });
+
+        // Answer button listeners: answer -> check + auto-advance
+        btnAnswer1.setOnClickListener(v -> handleAnswer(btnAnswer1.getText().toString()));
+        btnAnswer2.setOnClickListener(v -> handleAnswer(btnAnswer2.getText().toString()));
+        btnAnswer3.setOnClickListener(v -> handleAnswer(btnAnswer3.getText().toString()));
+        btnAnswer4.setOnClickListener(v -> handleAnswer(btnAnswer4.getText().toString()));
 
         // Load first question
         loadNewPokemonQuestion();
@@ -128,7 +113,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
 
                 currentCorrectAnswer = capitalize(typeName);
 
-                // Build options
+                // Build answer options
                 ArrayList<String> options = new ArrayList<>();
                 options.add(currentCorrectAnswer);
 
@@ -162,13 +147,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
         }).start();
     }
 
-    private String capitalize(String s) {
-        if (s == null || s.isEmpty()) return s;
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
-    }
-
-    private void checkAnswer(CharSequence text) {
-        String chosen = text.toString();
+    private void handleAnswer(String chosen) {
         if (chosen.equals(currentCorrectAnswer)) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
             score++;
@@ -178,5 +157,30 @@ public class PokemonQuizActivity extends AppCompatActivity {
                     "Wrong! Correct answer was: " + currentCorrectAnswer,
                     Toast.LENGTH_SHORT).show();
         }
+
+        // Auto-advance or finish
+        if (questionNumber < TOTAL_QUESTIONS) {
+            questionNumber++;
+            tvCounter.setText("Question: " + questionNumber + "/" + TOTAL_QUESTIONS);
+            loadNewPokemonQuestion();
+        } else {
+            // Last question just answered – finish quiz
+            tvQuestion.setText("Quiz finished! Final score: " + score + "/" + TOTAL_QUESTIONS);
+            Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show();
+
+            // Disable answer buttons so they can't tap again
+            btnAnswer1.setEnabled(false);
+            btnAnswer2.setEnabled(false);
+            btnAnswer3.setEnabled(false);
+            btnAnswer4.setEnabled(false);
+
+            // Show the "Back to quiz selection" button
+            btnBackToMenu.setVisibility(Button.VISIBLE);
+        }
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }

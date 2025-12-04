@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Question counter: now 1/10 -->
+        <!-- Question counter: 1/10 -->
         <TextView
             android:id="@+id/tvCounter"
             android:layout_width="wrap_content"
@@ -65,21 +65,14 @@
             android:text="Answer 4"
             android:layout_marginTop="8dp" />
 
-        <!-- Next question button -->
-        <Button
-            android:id="@+id/btnNextQuestion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Next Question"
-            android:layout_marginTop="16dp" />
-
-        <!-- Optional: Back to quiz selection screen -->
+        <!-- Back to quiz selection: starts hidden, only shown at the end -->
         <Button
             android:id="@+id/btnBackToMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back to Quiz Selection"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>
