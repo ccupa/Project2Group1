@@ -1,7 +1,7 @@
 package com.example.project2group1;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +21,11 @@ import java.util.Collections;
 import java.util.Random;
 
 public class PokemonQuizActivity extends AppCompatActivity {
+
+    private static final int TOTAL_QUESTIONS = 10;
+
     private TextView tvCounter, tvScore, tvQuestion;
-    private Button btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, btnNextQuestion;
+    private Button btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, btnNextQuestion, btnBackToMenu;
 
     private int questionNumber = 1;
     private int score = 0;
@@ -30,7 +33,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
 
     private Random random = new Random();
 
-    // Basic list of Pokémon types for fake answers
+    // List of all Pokémon types used for fake answers
     private static final ArrayList<String> ALL_TYPES = new ArrayList<>(
             Arrays.asList(
                     "normal", "fire", "water", "grass", "electric",
@@ -43,7 +46,8 @@ public class PokemonQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_geography_quiz); // reuse same layout
+        // Reuse the same layout as geography quiz
+        setContentView(R.layout.activity_geography_quiz);
 
         tvCounter = findViewById(R.id.tvCounter);
         tvScore = findViewById(R.id.tvScore);
@@ -54,32 +58,48 @@ public class PokemonQuizActivity extends AppCompatActivity {
         btnAnswer3 = findViewById(R.id.btnAnswer3);
         btnAnswer4 = findViewById(R.id.btnAnswer4);
         btnNextQuestion = findViewById(R.id.btnNextQuestion);
+        btnBackToMenu = findViewById(R.id.btnBackToMenu);   // NEW BUTTON
 
-        tvScore.setText("Score: 0");
-        tvCounter.setText("Question: 1/5");
+        tvScore.setText("Score: " + score);
+        tvCounter.setText("Question: " + questionNumber + "/" + TOTAL_QUESTIONS);
 
-        View.OnClickListener answerClickListener = v -> {
-            Button b = (Button) v;
-            checkAnswer(b.getText());
-        };
+        // Answer button listeners
+        btnAnswer1.setOnClickListener(v -> checkAnswer(btnAnswer1.getText()));
+        btnAnswer2.setOnClickListener(v -> checkAnswer(btnAnswer2.getText()));
+        btnAnswer3.setOnClickListener(v -> checkAnswer(btnAnswer3.getText()));
+        btnAnswer4.setOnClickListener(v -> checkAnswer(btnAnswer4.getText()));
 
-        btnAnswer1.setOnClickListener(answerClickListener);
-        btnAnswer2.setOnClickListener(answerClickListener);
-        btnAnswer3.setOnClickListener(answerClickListener);
-        btnAnswer4.setOnClickListener(answerClickListener);
+        // Next question button
+        btnNextQuestion.setOnClickListener(v -> {
+            if (questionNumber < TOTAL_QUESTIONS) {
+                questionNumber++;
+                tvCounter.setText("Question: " + questionNumber + "/" + TOTAL_QUESTIONS);
+                loadNewPokemonQuestion();
+            } else {
+                tvQuestion.setText("Quiz finished! Final score: " + score + "/" + TOTAL_QUESTIONS);
+                Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show();
+                btnNextQuestion.setEnabled(false);
+            }
+        });
 
-        btnNextQuestion.setOnClickListener(v -> loadNewPokemonQuestion());
+        // Back to quiz selection (LandingPageActivity)
+        btnBackToMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(PokemonQuizActivity.this, LandingPageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
 
+        // Load first question
         loadNewPokemonQuestion();
     }
 
     private void loadNewPokemonQuestion() {
         tvQuestion.setText("Loading Pokémon...");
 
-        // Run network code on a background thread
         new Thread(() -> {
             try {
-                // Pick a random Pokémon ID (1–151 for Gen 1, change range if you want)
+                // Random Pokémon from 1–151 (Gen 1). Adjust range if you want more.
                 int id = random.nextInt(151) + 1;
                 URL url = new URL("https://pokeapi.co/api/v2/pokemon/" + id);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -90,6 +110,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
                 );
                 StringBuilder builder = new StringBuilder();
                 String line;
+
                 while ((line = reader.readLine()) != null) {
                     builder.append(line);
                 }
@@ -100,20 +121,20 @@ public class PokemonQuizActivity extends AppCompatActivity {
 
                 String name = root.getString("name"); // e.g. "pikachu"
                 JSONArray typesArray = root.getJSONArray("types");
-                // Get the first type as the "main" type
-                JSONObject firstTypeObj = typesArray.getJSONObject(0)
-                        .getJSONObject("type");
+
+                // Main type = first type
+                JSONObject firstTypeObj = typesArray.getJSONObject(0).getJSONObject("type");
                 String typeName = firstTypeObj.getString("name"); // e.g. "electric"
 
                 currentCorrectAnswer = capitalize(typeName);
 
-                // Build answer choices
+                // Build options
                 ArrayList<String> options = new ArrayList<>();
                 options.add(currentCorrectAnswer);
 
-                // Add 3 random wrong types
                 ArrayList<String> shuffledTypes = new ArrayList<>(ALL_TYPES);
                 Collections.shuffle(shuffledTypes);
+
                 for (String t : shuffledTypes) {
                     String cap = capitalize(t);
                     if (!cap.equals(currentCorrectAnswer)) {
@@ -126,8 +147,6 @@ public class PokemonQuizActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     tvQuestion.setText("What is the main type of " + capitalize(name) + "?");
-                    tvCounter.setText("Question: " + questionNumber + "/5");
-
                     btnAnswer1.setText(options.get(0));
                     btnAnswer2.setText(options.get(1));
                     btnAnswer3.setText(options.get(2));
@@ -148,7 +167,6 @@ public class PokemonQuizActivity extends AppCompatActivity {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
-
     private void checkAnswer(CharSequence text) {
         String chosen = text.toString();
         if (chosen.equals(currentCorrectAnswer)) {
@@ -159,13 +177,6 @@ public class PokemonQuizActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Wrong! Correct answer was: " + currentCorrectAnswer,
                     Toast.LENGTH_SHORT).show();
-        }
-
-        questionNumber++;
-        if (questionNumber <= 5) {
-            loadNewPokemonQuestion();
-        } else {
-            tvQuestion.setText("Quiz finished! Final score: " + score + "/5");
         }
     }
 }
