@@ -39,4 +39,37 @@ public class PokemonQuizActivity extends AppCompatActivity {
                     "dragon", "steel", "fairy"
             )
     );
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_geography_quiz); // reuse same layout
+
+        tvCounter = findViewById(R.id.tvCounter);
+        tvScore = findViewById(R.id.tvScore);
+        tvQuestion = findViewById(R.id.tvQuestion);
+
+        btnAnswer1 = findViewById(R.id.btnAnswer1);
+        btnAnswer2 = findViewById(R.id.btnAnswer2);
+        btnAnswer3 = findViewById(R.id.btnAnswer3);
+        btnAnswer4 = findViewById(R.id.btnAnswer4);
+        btnNextQuestion = findViewById(R.id.btnNextQuestion);
+
+        tvScore.setText("Score: 0");
+        tvCounter.setText("Question: 1/5");
+
+        View.OnClickListener answerClickListener = v -> {
+            Button b = (Button) v;
+            checkAnswer(b.getText());
+        };
+
+        btnAnswer1.setOnClickListener(answerClickListener);
+        btnAnswer2.setOnClickListener(answerClickListener);
+        btnAnswer3.setOnClickListener(answerClickListener);
+        btnAnswer4.setOnClickListener(answerClickListener);
+
+        btnNextQuestion.setOnClickListener(v -> loadNewPokemonQuestion());
+
+        loadNewPokemonQuestion();
+    }
 }
