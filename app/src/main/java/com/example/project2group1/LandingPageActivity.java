@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -60,6 +61,10 @@ public class LandingPageActivity extends AppCompatActivity {
 
     public static String getUsername() {
         return un;
+    }
+
+    static Intent landingPageIntentFactory(Context context) {
+        return new Intent(context, LandingPageActivity.class);
     }
 
 }

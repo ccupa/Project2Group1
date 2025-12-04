@@ -19,7 +19,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract LeaderboardDao leaderboardDao();
 
     private static volatile AppDatabase INSTANCE;
-    private static final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
+    static final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

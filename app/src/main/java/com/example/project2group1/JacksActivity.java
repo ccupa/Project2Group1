@@ -95,6 +95,31 @@ public class JacksActivity extends AppCompatActivity {
 
     }
 
+    private void updateLeaderboardScore(int score) {
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            user.jackTriviaScore = score;
+
+            user.totalScore =
+                            user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+
+        });
+
+    }
+
 
 
     @SuppressLint("SetTextI18n")
@@ -117,10 +142,10 @@ public class JacksActivity extends AppCompatActivity {
     private void endGameView(int userExitClicked) {
 
         if (userExitClicked == 0) {
-            toastMaker("Logging out is work in progress");
+            startActivity(LoginScreen.loginIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 1) {
-            toastMaker("Leaderboard work in progress");
+            startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext()));
         }
         else if (userExitClicked == 2) {
             startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), LoginScreen.getUserName()));
@@ -143,7 +168,8 @@ public class JacksActivity extends AppCompatActivity {
             toastMaker("All questions done");
             currentIndex = 0;
             if (score > highScore) {
-               toastMaker("New High Score!!!");
+                updateLeaderboardScore(score);
+                toastMaker("New High Score!!!");
                 highScore = score;
             }
            // binding.questionTextView.setText("High Score: " + highScore);

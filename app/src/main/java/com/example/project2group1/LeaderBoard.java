@@ -3,6 +3,7 @@ package com.example.project2group1;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -31,7 +32,12 @@ public class LeaderBoard extends AppCompatActivity {
 
         displayTable(dao);
 
-
+        binding.leaderboardExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(LandingPageActivity.landingPageIntentFactory(getApplicationContext()));
+            }
+        });
 
 
     } //
