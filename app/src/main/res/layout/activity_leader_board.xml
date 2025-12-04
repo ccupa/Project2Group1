@@ -25,6 +25,7 @@
         android:layout_height="35sp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
+        android:gravity="center"
         android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
@@ -34,6 +35,7 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
+        android:gravity="center"
         android:text="Jack"
         app:layout_constraintStart_toEndOf="@+id/nameHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
@@ -43,8 +45,40 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
+        android:gravity="center"
         android:text="Carlos"
         app:layout_constraintStart_toEndOf="@+id/jackHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/joshHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="Josh"
+        app:layout_constraintStart_toEndOf="@+id/carlosHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/joeHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="Joe"
+        app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/totalHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="Total"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/joeHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
     <TextView
@@ -52,7 +86,8 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Josh"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1CarlosTextView"
         app:layout_constraintTop_toBottomOf="@+id/joshHeaderTextView" />
 
@@ -61,7 +96,8 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Joe"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1joshTextView"
         app:layout_constraintTop_toBottomOf="@+id/joeHeaderTextView" />
 
@@ -70,7 +106,8 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Total"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1joeTextView"
         app:layout_constraintTop_toBottomOf="@+id/totalHeaderTextView" />
 
@@ -135,7 +172,8 @@
         android:layout_width="75sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Name"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1TextView"
         app:layout_constraintTop_toBottomOf="@id/nameHeaderTextView" />
 
@@ -144,7 +182,8 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Jack"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1NameTextView"
         app:layout_constraintTop_toBottomOf="@+id/jackHeaderTextView" />
 
@@ -153,17 +192,18 @@
         android:layout_width="45sp"
         android:layout_height="35sp"
         android:layout_marginTop="8dp"
-        android:text="Carlos"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p1JackTextView"
         app:layout_constraintTop_toBottomOf="@+id/carlosHeaderTextView" />
-
 
 
     <TextView
         android:id="@+id/p2NameTextView"
         android:layout_width="75sp"
         android:layout_height="35sp"
-        android:text="Name"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2TextView"
         app:layout_constraintTop_toBottomOf="@+id/p1NameTextView" />
 
@@ -171,7 +211,8 @@
         android:id="@+id/p2JackTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:text="Jack"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2NameTextView"
         app:layout_constraintTop_toBottomOf="@+id/p1JackTextView" />
 
@@ -179,7 +220,8 @@
         android:id="@+id/p2CarlosTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:text="Carlos"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2JackTextView"
         app:layout_constraintTop_toBottomOf="@+id/p1CarlosTextView" />
 
@@ -187,7 +229,8 @@
         android:id="@+id/p2joshTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:text="Josh"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2CarlosTextView"
         app:layout_constraintTop_toBottomOf="@+id/p1joshTextView" />
 
@@ -195,7 +238,8 @@
         android:id="@+id/p2joeTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:text="Joe"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2joshTextView"
         app:layout_constraintTop_toBottomOf="@+id/p1joeTextView" />
 
@@ -203,37 +247,173 @@
         android:id="@+id/p2totalTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:text="Total"
+        android:gravity="center"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/p2joeTextView"
         app:layout_constraintTop_toBottomOf="@+id/p1totalTextView" />
 
     <TextView
-        android:id="@+id/joshHeaderTextView"
-        android:layout_width="45sp"
+        android:id="@+id/p3NameTextView"
+        android:layout_width="75sp"
         android:layout_height="35sp"
-        android:layout_marginTop="44dp"
-        android:text="Josh"
-        app:layout_constraintStart_toEndOf="@+id/carlosHeaderTextView"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3TextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2NameTextView" />
 
     <TextView
-        android:id="@+id/joeHeaderTextView"
+        android:id="@+id/p3JackTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:layout_marginTop="44dp"
-        android:text="Joe"
-        app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2JackTextView" />
 
     <TextView
-        android:id="@+id/totalHeaderTextView"
+        android:id="@+id/p3CarlosTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
-        android:layout_marginTop="44dp"
-        android:text="Total"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/joeHeaderTextView"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3JackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2CarlosTextView" />
+
+    <TextView
+        android:id="@+id/p3joshTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3CarlosTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2joshTextView" />
+
+    <TextView
+        android:id="@+id/p3joeTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3joshTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2joeTextView" />
+
+    <TextView
+        android:id="@+id/p3totalTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p3joeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p2totalTextView" />
+
+    <TextView
+        android:id="@+id/p4NameTextView"
+        android:layout_width="75sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4TextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3NameTextView" />
+
+    <TextView
+        android:id="@+id/p4JackTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3JackTextView" />
+
+    <TextView
+        android:id="@+id/p4CarlosTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4JackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3CarlosTextView" />
+
+    <TextView
+        android:id="@+id/p4joshTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4CarlosTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3joshTextView" />
+
+    <TextView
+        android:id="@+id/p4joeTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4joshTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3joeTextView" />
+
+    <TextView
+        android:id="@+id/p4totalTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p4joeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p3totalTextView" />
+
+    <TextView
+        android:id="@+id/p5NameTextView"
+        android:layout_width="75sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5TextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4NameTextView" />
+
+    <TextView
+        android:id="@+id/p5JackTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4JackTextView" />
+
+    <TextView
+        android:id="@+id/p5CarlosTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5JackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4CarlosTextView" />
+
+    <TextView
+        android:id="@+id/p5joshTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5CarlosTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4joshTextView" />
+
+    <TextView
+        android:id="@+id/p5joeTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5joshTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4joeTextView" />
+
+    <TextView
+        android:id="@+id/p5totalTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/p5joeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p4totalTextView" />
+
 
     />
 
