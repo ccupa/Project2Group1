@@ -47,7 +47,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Reuse the same layout as geography quiz
-        setContentView(R.layout.activity_geography_quiz);
+        setContentView(R.layout.activity_pokemon_quiz);
 
         tvCounter = findViewById(R.id.tvCounter);
         tvScore = findViewById(R.id.tvScore);
