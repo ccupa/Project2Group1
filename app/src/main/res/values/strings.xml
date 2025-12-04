@@ -21,4 +21,7 @@
     <string name="score_0">Score: 0</string>
     <string name="question_1_5">Question 1 / 5</string>
     <string name="leaderboard_header">Leaderboard</string>
+    <string name="current_user">Current User:</string>
+    <string name="position">Position:</string>
+    <string name="total_score">Total Score:</string>
 </resources>
