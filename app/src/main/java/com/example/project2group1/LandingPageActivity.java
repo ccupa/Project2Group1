@@ -38,9 +38,17 @@ public class LandingPageActivity extends AppCompatActivity {
             finish();
         });
 
+        //TODO
+        //change to intent factory or else might get credit off
         Button geoBtn = findViewById(R.id.carlosTriviaButton);
         geoBtn.setOnClickListener(v ->
                 startActivity(new Intent(this, GeographyQuizActivity.class)));
+
+        Button basketballBtn = findViewById(R.id.jackTriviaButton);
+        basketballBtn.setOnClickListener(v ->
+                startActivity(JacksActivity.jackIntentFactory(getApplicationContext())));
+
+
 
     }
 }

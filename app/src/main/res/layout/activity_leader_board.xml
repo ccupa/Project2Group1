@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeaderBoard">
+
+    <TextView
+        android:id="@+id/leaderboardTextView"
+        android:layout_width="253dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="@string/leaderboard_header"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameHeaderTextView"
+        android:layout_width="75sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/jackHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:text="Jack"
+        app:layout_constraintStart_toEndOf="@+id/nameHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/carlosHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:text="Carlos"
+        app:layout_constraintStart_toEndOf="@+id/jackHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/p1joshTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Josh"
+        app:layout_constraintStart_toEndOf="@+id/p1CarlosTextView"
+        app:layout_constraintTop_toBottomOf="@+id/joshHeaderTextView" />
+
+    <TextView
+        android:id="@+id/p1joeTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Joe"
+        app:layout_constraintStart_toEndOf="@+id/p1joshTextView"
+        app:layout_constraintTop_toBottomOf="@+id/joeHeaderTextView" />
+
+    <TextView
+        android:id="@+id/p1totalTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Total"
+        app:layout_constraintStart_toEndOf="@+id/p1joeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/totalHeaderTextView" />
+
+    <TextView
+        android:id="@+id/p1TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="88dp"
+        android:width="30sp"
+        android:height="35sp"
+        android:text="#1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/p2TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:width="30sp"
+        android:height="35sp"
+        android:text="#2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p1TextView" />
+
+    <TextView
+        android:id="@+id/p3TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:width="30sp"
+        android:height="35sp"
+        android:text="#3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p2TextView" />
+
+    <TextView
+        android:id="@+id/p4TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:width="30sp"
+        android:height="35sp"
+        android:text="#4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p3TextView" />
+
+    <TextView
+        android:id="@+id/p5TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:width="30sp"
+        android:height="35sp"
+        android:text="#5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/p4TextView" />
+
+    <TextView
+        android:id="@+id/p1NameTextView"
+        android:layout_width="75sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Name"
+        app:layout_constraintStart_toEndOf="@+id/p1TextView"
+        app:layout_constraintTop_toBottomOf="@id/nameHeaderTextView" />
+
+    <TextView
+        android:id="@+id/p1JackTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Jack"
+        app:layout_constraintStart_toEndOf="@+id/p1NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/jackHeaderTextView" />
+
+    <TextView
+        android:id="@+id/p1CarlosTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="8dp"
+        android:text="Carlos"
+        app:layout_constraintStart_toEndOf="@+id/p1JackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/carlosHeaderTextView" />
+
+
+
+    <TextView
+        android:id="@+id/p2NameTextView"
+        android:layout_width="75sp"
+        android:layout_height="35sp"
+        android:text="Name"
+        app:layout_constraintStart_toEndOf="@+id/p2TextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1NameTextView" />
+
+    <TextView
+        android:id="@+id/p2JackTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:text="Jack"
+        app:layout_constraintStart_toEndOf="@+id/p2NameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1JackTextView" />
+
+    <TextView
+        android:id="@+id/p2CarlosTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:text="Carlos"
+        app:layout_constraintStart_toEndOf="@+id/p2JackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1CarlosTextView" />
+
+    <TextView
+        android:id="@+id/p2joshTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:text="Josh"
+        app:layout_constraintStart_toEndOf="@+id/p2CarlosTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1joshTextView" />
+
+    <TextView
+        android:id="@+id/p2joeTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:text="Joe"
+        app:layout_constraintStart_toEndOf="@+id/p2joshTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1joeTextView" />
+
+    <TextView
+        android:id="@+id/p2totalTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:text="Total"
+        app:layout_constraintStart_toEndOf="@+id/p2joeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/p1totalTextView" />
+
+    <TextView
+        android:id="@+id/joshHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:text="Josh"
+        app:layout_constraintStart_toEndOf="@+id/carlosHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/joeHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:text="Joe"
+        app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    <TextView
+        android:id="@+id/totalHeaderTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginTop="44dp"
+        android:text="Total"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/joeHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
+
+    />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

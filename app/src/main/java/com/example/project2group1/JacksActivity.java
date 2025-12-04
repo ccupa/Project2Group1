@@ -151,19 +151,21 @@ public class JacksActivity extends AppCompatActivity {
             endGameView();
         }
 
-        String[] question = answers[index];
-        binding.questionTextView.setText(question[0]);
+        else {
 
-        ArrayList<String> choices = new ArrayList<>();
-        for (int i = 1; i < question.length;i++) choices.add(question[i]);
-        Collections.shuffle(choices);
-        correctIndex = choices.indexOf(question[1]);
+            String[] question = answers[index];
+            binding.questionTextView.setText(question[0]);
 
-        binding.answerTopLeftButton.setText(choices.get(0));
-        binding.answerTopRightButton.setText(choices.get(1));
-        binding.answerBottomLeftButton.setText(choices.get(2));
-        binding.answerBottomRightButton.setText(choices.get(3));
+            ArrayList<String> choices = new ArrayList<>();
+            for (int i = 1; i < question.length; i++) choices.add(question[i]);
+            Collections.shuffle(choices);
+            correctIndex = choices.indexOf(question[1]);
 
+            binding.answerTopLeftButton.setText(choices.get(0));
+            binding.answerTopRightButton.setText(choices.get(1));
+            binding.answerBottomLeftButton.setText(choices.get(2));
+            binding.answerBottomRightButton.setText(choices.get(3));
+        }
     }
 
     // plan to modify this later to get the questions from an API, but for now this will have to do

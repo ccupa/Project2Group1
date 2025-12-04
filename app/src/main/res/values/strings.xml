@@ -20,4 +20,5 @@
     <string name="questions_here">Questions here</string>
     <string name="score_0">Score: 0</string>
     <string name="question_1_5">Question 1 / 5</string>
+    <string name="leaderboard_header">Leaderboard</string>
 </resources>
