@@ -21,4 +21,12 @@ import java.util.Collections;
 import java.util.Random;
 
 public class PokemonQuizActivity extends AppCompatActivity {
+    private TextView tvCounter, tvScore, tvQuestion;
+    private Button btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, btnNextQuestion;
+
+    private int questionNumber = 1;
+    private int score = 0;
+    private String currentCorrectAnswer;
+
+    private Random random = new Random();
 }
