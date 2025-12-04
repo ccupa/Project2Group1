@@ -66,5 +66,6 @@ public class LandingPageActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
     }
 }
