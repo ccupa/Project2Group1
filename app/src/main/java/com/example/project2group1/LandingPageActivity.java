@@ -48,7 +48,9 @@ public class LandingPageActivity extends AppCompatActivity {
         basketballBtn.setOnClickListener(v ->
                 startActivity(JacksActivity.jackIntentFactory(getApplicationContext())));
 
-
+        Button leaderboardBtn = findViewById(R.id.leaderboardButton);
+        leaderboardBtn.setOnClickListener(v ->
+                startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext())));
 
     }
 }
