@@ -148,4 +148,25 @@ public class PokemonQuizActivity extends AppCompatActivity {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
+
+    private void checkAnswer(CharSequence text) {
+        String chosen = text.toString();
+        if (chosen.equals(currentCorrectAnswer)) {
+            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
+            score++;
+            tvScore.setText("Score: " + score);
+        } else {
+            Toast.makeText(this,
+                    "Wrong! Correct answer was: " + currentCorrectAnswer,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        questionNumber++;
+        if (questionNumber <= 5) {
+            loadNewPokemonQuestion();
+        } else {
+            tvQuestion.setText("Quiz finished! Final score: " + score + "/5");
+        }
+    }
+}
 }
