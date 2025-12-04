@@ -22,6 +22,9 @@
             android:name=".LeaderBoard"
             android:exported="false" />
 
+        <activity
+            android:name=".PokemonQuizActivity"
+            android:exported="false" />
 
         <activity
             android:name=".JacksTriviaQuestions"
