@@ -51,13 +51,11 @@ public class CSQuizActivity extends AppCompatActivity {
         answerButton4 = findViewById(R.id.btnAnswer4);
         nextButton = findViewById(R.id.btnNextQuestion);
 
-        // Answer button listeners – check answer, then auto-advance
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
         answerButton3.setOnClickListener(v -> checkAnswer(answerButton3.getText()));
         answerButton4.setOnClickListener(v -> checkAnswer(answerButton4.getText()));
 
-        // Next button – manual advance (still allowed)
         nextButton.setOnClickListener(v -> {
             goToNextQuestion();
         });
@@ -84,8 +82,9 @@ public class CSQuizActivity extends AppCompatActivity {
 
                 String jsonString = builder.toString();
                 JSONObject root = new JSONObject(jsonString);
-                JSONArray resultsArray = root.getJSONArray("results");
 
+
+                JSONArray resultsArray = root.getJSONArray("results");
                 ArrayList<Question> tempList = new ArrayList<>();
 
                 for (int i = 0; i < resultsArray.length(); i++) {
@@ -157,7 +156,6 @@ public class CSQuizActivity extends AppCompatActivity {
         answerButton4.setText(q.answerList.get(3));
     }
 
-    // NEW helper method to centralize advancing logic
     private void goToNextQuestion() {
         currentIndex++;
         if (currentIndex < questionList.size()) {
@@ -182,7 +180,6 @@ public class CSQuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Wrong! Correct Answer was: " + currentCorrectAnswer, Toast.LENGTH_SHORT).show();
         }
 
-        // Automatically go to the next question after answering
         goToNextQuestion();
     }
 
