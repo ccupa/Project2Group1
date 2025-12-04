@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LandingPageActivity extends AppCompatActivity {
+
+    private static String un; //username
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,7 @@ public class LandingPageActivity extends AppCompatActivity {
         }
 
         String username = prefs.getString(Session.KEY_USERNAME, "");
+        un = username;
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
@@ -53,4 +57,9 @@ public class LandingPageActivity extends AppCompatActivity {
                 startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext())));
 
     }
+
+    public static String getUsername() {
+        return un;
+    }
+
 }

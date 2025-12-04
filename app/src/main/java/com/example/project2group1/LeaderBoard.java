@@ -34,9 +34,47 @@ public class LeaderBoard extends AppCompatActivity {
 
 
 
-    }
+    } //
 
     public void displayTable(LeaderboardDao dao) {
+
+        String currentUsername = LandingPageActivity.getUsername();
+        binding.displayCurrentUsernameTextView.setText(currentUsername);
+        final LeaderboardEntity[] thisUser = new LeaderboardEntity[1];
+        thisUser[0] = null;
+
+        dao.getAllSorted().observe(this, allUsers -> {
+            int position = 0;
+            int totalScore = 0;
+            while (position < allUsers.size()) {
+                if(allUsers.get(position).username.equals(currentUsername)) {
+                    thisUser[0] = allUsers.get(position);
+                    position++;
+                    break;
+                }
+                position++;
+            }
+            if (thisUser[0] == null) {
+                toastMaker("User not found, weird");
+                return;
+            }
+            binding.displayCurrentUserPositionTextView.setText(String.valueOf(position));
+
+            totalScore += thisUser[0].jackTriviaScore;
+            totalScore += thisUser[0].carlosTriviaScore;
+            totalScore += thisUser[0].joshTriviaScore;
+            totalScore += thisUser[0].joeTriviaScore;
+
+            binding.displayCurrentUserTotalScoreTextView.setText(String.valueOf(totalScore));
+
+            binding.displayCurrentUserJackScoreTextView.setText(String.valueOf(thisUser[0].jackTriviaScore));
+            binding.displayCurrentUserCarlosScoreTextView.setText(String.valueOf(thisUser[0].carlosTriviaScore));
+            binding.displayCurrentUserJoshScoreTextView.setText(String.valueOf(thisUser[0].joshTriviaScore));
+            binding.displayCurrentUserJoeScoreTextView.setText(String.valueOf(thisUser[0].joeTriviaScore));
+
+
+
+        });
 
         dao.getTop(5).observe(this, leaders -> {
 
@@ -44,6 +82,8 @@ public class LeaderBoard extends AppCompatActivity {
                 toastMaker("No data in leaderboard table :(");
                 return;
             }
+
+
 
             LeaderboardEntity first = leaders.get(0);
             int totalScore = 0;
@@ -58,7 +98,6 @@ public class LeaderBoard extends AppCompatActivity {
             binding.p1joshTextView.setText(String.valueOf(first.joshTriviaScore));
             binding.p1joeTextView.setText(String.valueOf(first.joeTriviaScore));
             binding.p1totalTextView.setText(String.valueOf(totalScore));
-
 
 
             if (leaders.size() < 2) return;
@@ -77,6 +116,7 @@ public class LeaderBoard extends AppCompatActivity {
             binding.p2joeTextView.setText(String.valueOf(second.joeTriviaScore));
             binding.p2totalTextView.setText(String.valueOf(totalScore));
 
+
             if (leaders.size() < 3) return;
 
             LeaderboardEntity third = leaders.get(2);
@@ -93,6 +133,7 @@ public class LeaderBoard extends AppCompatActivity {
             binding.p2joeTextView.setText(String.valueOf(third.joeTriviaScore));
             binding.p2totalTextView.setText(String.valueOf(totalScore));
 
+
             if (leaders.size() < 4) return;
 
             LeaderboardEntity fourth = leaders.get(3);
@@ -108,6 +149,7 @@ public class LeaderBoard extends AppCompatActivity {
             binding.p2joshTextView.setText(String.valueOf(fourth.joshTriviaScore));
             binding.p2joeTextView.setText(String.valueOf(fourth.joeTriviaScore));
             binding.p2totalTextView.setText(String.valueOf(totalScore));
+
 
             if (leaders.size() < 4) return;
 

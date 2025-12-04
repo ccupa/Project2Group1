@@ -41,27 +41,6 @@
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
     <TextView
-        android:id="@+id/currentUserJackScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Jack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
-
-    <TextView
-        android:id="@+id/displayCurrentUserJackScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="48dp"
-        android:gravity="center"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserJackScoreTextView" />
-
-    <TextView
         android:id="@+id/carlosHeaderTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
@@ -70,27 +49,6 @@
         android:text="Carlos"
         app:layout_constraintStart_toEndOf="@+id/jackHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
-
-    <TextView
-        android:id="@+id/currentUserCarlosScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Carlos"
-        app:layout_constraintStart_toEndOf="@+id/currentUserJackScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
-
-    <TextView
-        android:id="@+id/displayCurrentUserCarlosScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:gravity="center"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserJackScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserCarlosScoreTextView" />
 
     <TextView
         android:id="@+id/joshHeaderTextView"
@@ -103,27 +61,6 @@
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
     <TextView
-        android:id="@+id/currentUserJoshScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Josh"
-        app:layout_constraintStart_toEndOf="@+id/currentUserCarlosScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
-
-    <TextView
-        android:id="@+id/displayCurrentUserJoshScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:gravity="center"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserCarlosScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserJoshScoreTextView" />
-
-    <TextView
         android:id="@+id/joeHeaderTextView"
         android:layout_width="45sp"
         android:layout_height="35sp"
@@ -132,27 +69,6 @@
         android:text="Joe"
         app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
-
-    <TextView
-        android:id="@+id/currentUserJoeScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Joe"
-        app:layout_constraintStart_toEndOf="@+id/currentUserJoshScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
-
-    <TextView
-        android:id="@+id/displayCurrentUserJoeScoreTextView"
-        android:layout_width="45sp"
-        android:layout_height="35sp"
-        android:layout_marginStart="44dp"
-        android:gravity="center"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserJoshScoreTextView"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserJoeScoreTextView" />
 
     <TextView
         android:id="@+id/totalHeaderTextView"
@@ -502,26 +418,27 @@
         android:id="@+id/currentUsernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="80dp"
         android:text="@string/current_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p5TextView" />
 
     <TextView
-        android:id="@+id/currentUserTotalScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/total_score"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUserPlaceTextView" />
+        android:id="@+id/displayCurrentUserJoeScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="36dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserJoshScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserJoeScoreTextView" />
 
     <TextView
         android:id="@+id/displayCurrentUserPositionTextView"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:text=""
         app:layout_constraintStart_toEndOf="@+id/currentUserPlaceTextView"
         app:layout_constraintTop_toBottomOf="@+id/displayCurrentUsernameTextView" />
@@ -536,13 +453,15 @@
         app:layout_constraintTop_toBottomOf="@+id/displayCurrentUserPositionTextView" />
 
     <TextView
-        android:id="@+id/currentUserPlaceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/position"
+        android:id="@+id/currentUserJackScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Jack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentUsernameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
 
     <TextView
         android:id="@+id/displayCurrentUsernameTextView"
@@ -552,12 +471,98 @@
         android:layout_marginTop="80dp"
         android:text=""
         app:layout_constraintStart_toEndOf="@+id/currentUsernameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/p5TextView" /><![CDATA[
+        app:layout_constraintTop_toBottomOf="@+id/p5TextView" />
+
+    <TextView
+        android:id="@+id/currentUserJoeScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Joe"
+        app:layout_constraintStart_toEndOf="@+id/currentUserJoshScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
+
+    <TextView
+        android:id="@+id/displayCurrentUserJoshScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="52dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserCarlosScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserJoshScoreTextView" />
+
+    <TextView
+        android:id="@+id/displayCurrentUserCarlosScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="36dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/displayCurrentUserJackScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserCarlosScoreTextView" />
+
+    <TextView
+        android:id="@+id/currentUserJoshScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Josh"
+        app:layout_constraintStart_toEndOf="@+id/currentUserCarlosScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
+
+    <TextView
+        android:id="@+id/currentUserCarlosScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Carlos"
+        app:layout_constraintStart_toEndOf="@+id/currentUserJackScoreTextView"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
+
+    <TextView
+        android:id="@+id/displayCurrentUserJackScoreTextView"
+        android:layout_width="45sp"
+        android:layout_height="35sp"
+        android:layout_marginStart="24dp"
+        android:gravity="center"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserJackScoreTextView" />
+
+    <TextView
+        android:id="@+id/currentUserPlaceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/position"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentUsernameTextView" />
+
+    <TextView
+        android:id="@+id/currentUserTotalScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/total_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentUserPlaceTextView" /><![CDATA[
+
+
+
+
 
 
 
 
     />
+
 
 
 ]]>
