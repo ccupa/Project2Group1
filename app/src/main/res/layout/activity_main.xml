@@ -22,16 +22,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
         />
+
+    <TextView
+        android:id="@+id/tvBasketballHighScore"
+        android:text="High Score: 0"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/jackTriviaButton"
+        app:layout_constraintStart_toStartOf="@id/jackTriviaButton"
+        app:layout_constraintEnd_toEndOf="@id/jackTriviaButton"
+        />
+
     <Button
         android:id="@+id/jackTriviaButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="64dp"
-        android:text="Jack"
+        android:text="@string/basketball"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseYourTriviaTextView" />
+
+    <TextView
+        android:id="@+id/tvGeoHighScore"
+        android:text="High Score: 0"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/carlosTriviaButton"
+        app:layout_constraintStart_toStartOf="@id/carlosTriviaButton"
+        app:layout_constraintEnd_toEndOf="@id/carlosTriviaButton"
+        />
 
     <Button
         android:id="@+id/carlosTriviaButton"
@@ -44,6 +69,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jackTriviaButton" />
 
+    <TextView
+        android:id="@+id/tvPokemonHighScore"
+        android:text="High Score: 0"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/josephTriviaButton"
+        app:layout_constraintStart_toStartOf="@id/josephTriviaButton"
+        app:layout_constraintEnd_toEndOf="@id/josephTriviaButton"
+        />
+
     <Button
         android:id="@+id/josephTriviaButton"
         android:layout_width="150dp"
@@ -54,6 +91,18 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseYourTriviaTextView" />
+
+    <TextView
+        android:id="@+id/tvComputerScienceHighScore"
+        android:text="High Score: 0"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/joshTriviaButton"
+        app:layout_constraintStart_toStartOf="@id/joshTriviaButton"
+        app:layout_constraintEnd_toEndOf="@id/joshTriviaButton"
+        />
 
     <Button
         android:id="@+id/joshTriviaButton"

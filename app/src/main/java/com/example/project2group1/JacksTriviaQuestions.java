@@ -1,5 +1,7 @@
 package com.example.project2group1;
 
+import android.content.SharedPreferences;
+import java.util.concurrent.Executors;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +18,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+
+
+/**
+ * used retrofit to load an api I created and stored on my aws instance
+ */
 
 public class JacksTriviaQuestions extends AppCompatActivity {
 
@@ -28,6 +43,8 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     private int correctIndex;
     private boolean roundOver = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,7 +52,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         binding = ActivityJacksBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
-        loadQuestions("basketball_trivia_2004_present.csv");
+
 
         // tried to code each button set up in this order to keep consistency
         binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +88,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             }
         });
 
-        showQuestion(currentIndex);
+        // get all buttons set then load questions
+        loadQuestions();
+
 
     }
 
@@ -95,6 +114,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * simple function to check if score needs to be updated and updates database
+     */
     private void updateLeaderboardScore(int score) {
 
         AppDatabase db = AppDatabase.getInstance(this);
@@ -123,7 +145,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     }
 
 
-
+    /**
+     * sets buttons in order for player to exit, go to leaderboard, log out, or play again
+     */
     @SuppressLint("SetTextI18n")
     private void endGameView() {
         //probably a better way to hide the textViews but this works
@@ -134,6 +158,28 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
         updateLeaderboardScore(score);
 
+        SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+        String username = prefs.getString(Session.KEY_USERNAME, "guest");
+        int finalScore = score;
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+            CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+            String category = "Basketball";
+            CategoryHighScore existing = dao.getHighScore(username, category);
+
+            if (existing == null) {
+                CategoryHighScore hs = new CategoryHighScore();
+                hs.username = username;
+                hs.category = category;
+                hs.score = finalScore;
+                dao.insert(hs);
+            } else if (finalScore > existing.score) {
+                dao.updateScore(existing.id, finalScore);
+            }
+        });
+
         binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
         binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1
         binding.answerBottomLeftButton.setText("Back"); // userExitClick = 2
@@ -142,6 +188,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
        roundOver = true;
     }
 
+    /**
+     * same as above but with the option the player picked
+     */
     @SuppressLint("SetTextI18n")
     private void endGameView(int userExitClicked) {
 
@@ -172,6 +221,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * displays questions and initials post-game stuff
+     * @param index
+     */
     public void showQuestion(int index) {
 
         if (index >= answers.length) {
@@ -210,8 +263,76 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         }
     }
 
-    // plan to modify this later to get the questions from an API, but for now this will have to do
-    private void loadQuestions(String filename) {
+    /**
+     * connects to my API and loads questions in
+     * had to alter manifest and let android connect to http inorder for this to work which was a pain
+     */
+    private void loadQuestions() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ec2-13-52-247-185.us-west-1.compute.amazonaws.com:3000/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TriviaApi api = retrofit.create(TriviaApi.class);
+
+        api.getRandomTen().enqueue(new Callback<List<TriviaQuestion>>() {
+            @Override
+            public void onResponse(Call<List<TriviaQuestion>> call, Response<List<TriviaQuestion>> response) {
+
+                if (!response.isSuccessful()) {
+                    toastMaker("Bad response from api");
+                    toastMaker(String.valueOf(response.code()));
+                    loadQuestions_backup("basketball_trivia_2004_present.csv");
+                    return;
+                }
+
+                List<TriviaQuestion> results = response.body();
+                if (results == null) {
+                    toastMaker("No questions received");
+                    loadQuestions_backup("basketball_trivia_2004_present.csv");
+                    return;
+                }
+
+                for (int i = 0; i < answers.length; i++) {
+
+                    TriviaQuestion q = results.get(i);
+                    String[] formated_question = new String[5];
+
+                    formated_question[0] = q.question;
+                    formated_question[1] = q.correct_answer;
+
+                    List<String> wrong_answers = q.incorrect_answers;
+                    Collections.shuffle(wrong_answers);
+
+                    formated_question[2] = wrong_answers.get(0);
+                    formated_question[3] = wrong_answers.get(1);
+                    formated_question[4] = wrong_answers.get(2);
+
+                    answers[i] = formated_question;
+                }
+
+                showQuestion(currentIndex);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<TriviaQuestion>> call, Throwable throwable) {
+                toastMaker("API failed");
+                loadQuestions_backup("basketball_trivia_2004_present.csv");
+
+            }
+        });
+
+
+
+    }
+
+    /**
+     * actually my first question loaded before the api
+     * decided since it still works perfect if the api fails to just use this as backup
+     */
+    public void loadQuestions_backup(String filename) {
 
         ArrayList<String[]> allQuestions = new ArrayList<>();
 
@@ -266,6 +387,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             answers[i] = allQuestions.get(randomIndex);
 
         }
+
+        showQuestion(currentIndex);
+
     }
 
     private boolean answersContainsQuestion(String[] list) {
@@ -281,6 +405,20 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * functional methods below that other methods or classes use
+     */
+    class TriviaQuestion{
+        public String question;
+        public String correct_answer;
+        public List<String> incorrect_answers;
+    }
+
+    interface TriviaApi {
+        @GET("random10")
+        Call<List<TriviaQuestion>> getRandomTen();
+    }
+
     static Intent jackIntentFactory(Context context) {
         return new Intent(context, JacksTriviaQuestions.class);
     }
@@ -290,3 +428,4 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     }
 
 }
+
