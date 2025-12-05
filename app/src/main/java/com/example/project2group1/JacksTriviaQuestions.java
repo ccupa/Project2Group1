@@ -27,6 +27,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
 
+/**
+ * used retrofit to load an api I created and stored on my aws instance
+ */
+
 public class JacksTriviaQuestions extends AppCompatActivity {
 
     ActivityJacksBinding binding;
@@ -82,7 +86,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             }
         });
 
-
+        // get all buttons set then load questions
         loadQuestions();
 
 
@@ -108,6 +112,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * simple function to check if score needs to be updated and updates database
+     */
     private void updateLeaderboardScore(int score) {
 
         AppDatabase db = AppDatabase.getInstance(this);
@@ -136,7 +143,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     }
 
 
-
+    /**
+     * sets buttons in order for player to exit, go to leaderboard, log out, or play again
+     */
     @SuppressLint("SetTextI18n")
     private void endGameView() {
         //probably a better way to hide the textViews but this works
@@ -155,6 +164,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
        roundOver = true;
     }
 
+    /**
+     * same as above but with the option the player picked
+     */
     @SuppressLint("SetTextI18n")
     private void endGameView(int userExitClicked) {
 
@@ -185,6 +197,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * displays questions and initials post-game stuff
+     * @param index
+     */
     public void showQuestion(int index) {
 
         if (index >= answers.length) {
@@ -223,7 +239,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         }
     }
 
-    // plan to modify this later to get the questions from an API, but for now this will have to do
+    /**
+     * connects to my API and loads questions in
+     * had to alter manifest and let android connect to http inorder for this to work which was a pain
+     */
     private void loadQuestions() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -285,6 +304,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * actually my first question loaded before the api
+     * decided since it still works perfect if the api fails to just use this as backup
+     */
     public void loadQuestions_backup(String filename) {
 
         ArrayList<String[]> allQuestions = new ArrayList<>();
@@ -365,6 +388,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
     }
 
+    /**
+     * functional methods below that other methods or classes use
+     */
     class TriviaQuestion{
         public String question;
         public String correct_answer;
