@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdminActivity extends AppCompatActivity {
 
     Button btnBackToMenu;
+
     Button btnAddDeleteUser;
     Button btnUserHistory;
 
@@ -20,6 +21,7 @@ public class AdminActivity extends AppCompatActivity {
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
         btnAddDeleteUser = findViewById(R.id.btnAddDelUser);
         btnUserHistory = findViewById(R.id.btnViwHistoryofUser);
+        btnBackToMenu.setVisibility(Button.VISIBLE);
 
         // Go to Add/Delete users page
         btnAddDeleteUser.setOnClickListener(v -> {
@@ -40,5 +42,13 @@ public class AdminActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        // Back button only visible at the very end (also set to GONE in XML)
+        btnBackToMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, LandingPageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
     }
 }

@@ -72,6 +72,7 @@ public class CSQuizActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
     }
 
     private void loadQuestionsApi() {

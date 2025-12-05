@@ -1,9 +1,9 @@
 package com.example.project2group1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ public class AddDeleteUserActivity extends AppCompatActivity {
     private ActivityAddRemoveUserBinding binding;
     private UserDao userDao;
 
+    Button btnBackToAdmin; // ← added to match AdminActivity style
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,16 @@ public class AddDeleteUserActivity extends AppCompatActivity {
 
         userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 
+        btnBackToAdmin = findViewById(R.id.btnBackToMenu);
+        btnBackToAdmin.setVisibility(Button.VISIBLE);
+        btnBackToAdmin.setOnClickListener(v -> {
+            Intent intent = new Intent(AddDeleteUserActivity.this, AdminActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
+        // Add/Delete user buttons
         binding.btnAddUser.setOnClickListener(v -> attemptAddUser());
         binding.btnDeleteUser.setOnClickListener(v -> attemptDeleteUser());
     }
@@ -95,7 +107,7 @@ public class AddDeleteUserActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    static Intent addDeleteUserIntentFactory(Context context) {
+    static Intent addDeleteUserIntentFactory(android.content.Context context) {
         return new Intent(context, AddDeleteUserActivity.class);
     }
 }

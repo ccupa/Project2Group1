@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class UserHistoryforAdmin extends AppCompatActivity {
     private ActivityUserHistoryBinding binding;
     private UserDao userDao;
 
+    private Button btnBackToAdmin;
     private ArrayAdapter<String> adapter;
     private final List<String> displayList = new ArrayList<>();
 
@@ -26,14 +28,24 @@ public class UserHistoryforAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ViewBinding, same style as SignUpActivity
+        // ViewBinding
         binding = ActivityUserHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Same DB pattern
+        // DB
         userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
 
-        // Set up adapter for the ListView
+        // Back button (using ViewBinding; make sure your XML has btnBackToMenu)
+        btnBackToAdmin = binding.btnBackToMenu;
+        btnBackToAdmin.setVisibility(Button.VISIBLE);
+        btnBackToAdmin.setOnClickListener(v -> {
+            Intent intent = new Intent(UserHistoryforAdmin.this, AdminActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
+        // Adapter for the ListView
         adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,

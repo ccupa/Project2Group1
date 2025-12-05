@@ -39,5 +39,12 @@
         android:layout_height="wrap_content"
         android:text="Delete User"
         android:layout_marginTop="8dp" />
+    <Button
+        android:id="@+id/btnBackToMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Admin Dashboard"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
 
 </LinearLayout>
