@@ -76,6 +76,27 @@ public class GeographyQuizActivity extends AppCompatActivity{
 
                     backToMenuButton.setVisibility(View.VISIBLE);
 
+                    SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+                    String username = prefs.getString(Session.KEY_USERNAME, "guest");
+                    int finalScore = score;
+
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                        CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+                        String category = "Geography";
+                        CategoryHighScore existing = dao.getHighScore(username, category);
+
+                        if (existing == null) {
+                            CategoryHighScore hs = new CategoryHighScore();
+                            hs.username = username;
+                            hs.category = category;
+                            hs.score = finalScore;
+                            dao.insert(hs);
+                        } else if (finalScore > existing.score) {
+                            dao.updateScore(existing.id, finalScore);
+                        }
+                    });
 
                 }
         });

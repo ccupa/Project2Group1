@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import java.util.concurrent.Executors;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,20 @@ public class LandingPageActivity extends AppCompatActivity {
         String username = prefs.getString(Session.KEY_USERNAME, "");
         un = username;
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
+
+        TextView tvGeoHighScore = findViewById(R.id.tvGeoHighScore);
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+            CategoryHighScoreDao dao = db.categoryHighScoreDao();
+            CategoryHighScore hs = dao.getHighScore(username, "Geography");
+
+            int bestScore = (hs != null) ? hs.score : 0;
+
+            runOnUiThread(() ->
+                    tvGeoHighScore.setText("High Score: " + bestScore)
+            );
+        });
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         tvWelcome.setText("Welcome, " + username);
