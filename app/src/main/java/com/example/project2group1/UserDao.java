@@ -1,9 +1,12 @@
 package com.example.project2group1;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import java.util.List;
 
 @Dao
 public interface UserDao {
@@ -15,4 +18,8 @@ public interface UserDao {
 
     @Query("SELECT COUNT(*) FROM users")
     int count();
+    @Query("SELECT * FROM users ORDER BY username ASC")
+    List<User> getAllUsers();
+    @Query("DELETE FROM users WHERE username = :username")
+    void deleteUser(String username);
 }

@@ -1,36 +1,44 @@
 package com.example.project2group1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-
-
 public class AdminActivity extends AppCompatActivity {
+
+    Button btnBackToMenu;
+    Button btnAddDeleteUser;
+    Button btnUserHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        UserDao userDao = AppDatabase.getInstance(this).userDao();
-        Button btnEditQuestions = findViewById(R.id.btnEditQuestions);
-        Button btnViwHistoryofUser = findViewById(R.id.btnViwHistoryofUser);
+        btnBackToMenu = findViewById(R.id.btnBackToMenu);
+        btnAddDeleteUser = findViewById(R.id.btnAddDelUser);
+        btnUserHistory = findViewById(R.id.btnViwHistoryofUser);
 
-
-        //TODO: ALSO add in a way to see all the current users and login history
-
-        btnEditQuestions.setOnClickListener(v -> {
-            // TODO: Implement the edit questions activity
-            // This method allows the admin to change the questions and their answers. Allows them to view and try to quiz too
+        // Go to Add/Delete users page
+        btnAddDeleteUser.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, AddDeleteUserActivity.class);
+            startActivity(intent);
         });
 
-        btnViwHistoryofUser.setOnClickListener(v -> {
-            // TODO: Implement a way to view all the people that logged in the past
-            // This is allowing the user to get a list of all the previously logged in people.
+        // Go to User history page
+        btnUserHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, UserHistoryforAdmin.class);
+            startActivity(intent);
+        });
+
+        // Existing back-to-menu logic
+        btnBackToMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, LandingPageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
     }
-
 }

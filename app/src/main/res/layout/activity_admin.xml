@@ -13,17 +13,30 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:paddingBottom="8dp" />
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Down Below, are the special admin buttons"
+        android:textSize="18dp"
+        android:paddingBottom="8dp" />
 
     <Button
-        android:id="@+id/btnEditQuestions"
+        android:id="@+id/btnAddDelUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Questions" />
+        android:text="Add/Remove User" />
 
     <Button
         android:id="@+id/btnViwHistoryofUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View List of Login History" />
-
+    <Button
+        android:id="@+id/btnBackToMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Quiz Selection"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
 </LinearLayout>

@@ -17,6 +17,12 @@
         <activity
             android:name=".GeographyQuizActivity"
             android:exported="false"/>
+        <activity
+            android:name=".UserHistoryforAdmin"
+            android:exported="false"/>
+        <activity
+            android:name=".AddDeleteUserActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".LeaderBoard"
