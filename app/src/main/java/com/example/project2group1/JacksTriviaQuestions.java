@@ -46,7 +46,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         binding = ActivityJacksBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         EdgeToEdge.enable(this);
-        loadQuestions("basketball_trivia_2004_present.csv");
+
 
         // tried to code each button set up in this order to keep consistency
         binding.answerTopLeftButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             }
         });
 
-        showQuestion(currentIndex);
+
+        loadQuestions();
+
 
     }
 
@@ -222,10 +224,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     }
 
     // plan to modify this later to get the questions from an API, but for now this will have to do
-    private void loadQuestions(String filename) {
+    private void loadQuestions() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://triviaapp@ec2-13-52-247-185.us-west-1.compute.amazonaws.com:3000/random10")
+                .baseUrl("http://ec2-13-52-247-185.us-west-1.compute.amazonaws.com:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -267,11 +269,15 @@ public class JacksTriviaQuestions extends AppCompatActivity {
                     answers[i] = formated_question;
                 }
 
+                showQuestion(currentIndex);
+
             }
 
             @Override
             public void onFailure(Call<List<TriviaQuestion>> call, Throwable throwable) {
+                toastMaker("API failed");
                 loadQuestions_backup("basketball_trivia_2004_present.csv");
+
             }
         });
 
@@ -341,6 +347,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             answers[i] = allQuestions.get(randomIndex);
 
         }
+
+        showQuestion(currentIndex);
+
     }
 
     private boolean answersContainsQuestion(String[] list) {
