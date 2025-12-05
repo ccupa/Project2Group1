@@ -15,6 +15,11 @@ public class LandingPageActivity extends AppCompatActivity {
 
     private static String un; //username
 
+    private TextView tvGeoHighScore;
+    private TextView tvBasketBallHighScore;
+    private TextView tvPokemonHighScore;
+    private TextView tvComputerScienceHighScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,35 +36,12 @@ public class LandingPageActivity extends AppCompatActivity {
         un = username;
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
 
-        TextView tvGeoHighScore = findViewById(R.id.tvGeoHighScore);
-        TextView tvBasketBallHighScore = findViewById(R.id.tvBasketballHighScore);
-        TextView tvPokemonHighScore = findViewById(R.id.tvPokemonHighScore);
-        TextView tvComputerScienceHighScore = findViewById(R.id.tvComputerScienceHighScore);
+        tvGeoHighScore = findViewById(R.id.tvGeoHighScore);
+        tvBasketBallHighScore = findViewById(R.id.tvBasketballHighScore);
+        tvPokemonHighScore = findViewById(R.id.tvPokemonHighScore);
+        tvComputerScienceHighScore = findViewById(R.id.tvComputerScienceHighScore);
 
-
-        Executors.newSingleThreadExecutor().execute(() -> {
-                    AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-                    CategoryHighScoreDao dao = db.categoryHighScoreDao();
-
-                    CategoryHighScore basketBallScore = dao.getHighScore(username, "Basketball");
-                    int ballBest = (basketBallScore != null) ? basketBallScore.score : 0;
-
-                    CategoryHighScore geoScore = dao.getHighScore(username, "Geography");
-                    int GeographyBest = (geoScore != null) ? geoScore.score : 0;
-
-                    CategoryHighScore pokemonScore = dao.getHighScore(username, "Pokemon");
-                    int pokeBest = (pokemonScore != null) ? pokemonScore.score : 0;
-
-                    CategoryHighScore computerScore = dao.getHighScore(username, "Computer Science");
-                    int computerBest = (computerScore != null) ? computerScore.score : 0;
-
-                    runOnUiThread(() -> {
-                        tvGeoHighScore.setText("High Score: " + GeographyBest);
-                        tvBasketBallHighScore.setText("High Score: " + ballBest);
-                        tvPokemonHighScore.setText("High Score: " + pokeBest);
-                        tvComputerScienceHighScore.setText("High Score: " + computerBest);
-                    });
-                });
+        loadHighScores(username);
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         tvWelcome.setText("Welcome, " + username);
@@ -107,6 +89,42 @@ public class LandingPageActivity extends AppCompatActivity {
         leaderboardBtn.setOnClickListener(v ->
                 startActivity(LeaderBoard.leaderboardIntentFactory(getApplicationContext())));
 
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+        String username = prefs.getString(Session.KEY_USERNAME, "");
+        if (!username.isEmpty()) {
+            loadHighScores(username);
+        }
+    }
+
+    private void loadHighScores(String username) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+            CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+            CategoryHighScore basketBallScore = dao.getHighScore(username, "Basketball");
+            int ballBest = (basketBallScore != null) ? basketBallScore.score : 0;
+
+            CategoryHighScore geoScore = dao.getHighScore(username, "Geography");
+            int geographyBest = (geoScore != null) ? geoScore.score : 0;
+
+            CategoryHighScore pokemonScore = dao.getHighScore(username, "Pokemon");
+            int pokeBest = (pokemonScore != null) ? pokemonScore.score : 0;
+
+            CategoryHighScore computerScore = dao.getHighScore(username, "Computer Science");
+            int computerBest = (computerScore != null) ? computerScore.score : 0;
+
+            runOnUiThread(() -> {
+                tvGeoHighScore.setText("High Score: " + geographyBest);
+                tvBasketBallHighScore.setText("High Score: " + ballBest);
+                tvPokemonHighScore.setText("High Score: " + pokeBest);
+                tvComputerScienceHighScore.setText("High Score: " + computerBest);
+            });
+        });
     }
 
     public static String getUsername() {
