@@ -28,4 +28,5 @@
     <string name="welcometotriviago">Welcome to Trivia Go!</string>
     <string name="question">Question:</string>
     <string name="back_to_menu">Back to Menu</string>
+    <string name="basketball">Basketball</string>
 </resources>
