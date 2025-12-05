@@ -1,5 +1,6 @@
 package com.example.project2group1;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import java.util.concurrent.Executors;
 import android.os.Bundle;
@@ -55,18 +56,19 @@ public class CSQuizActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.btnNextQuestion);
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
 
+        // Hide back button during the quiz; will show it only at the end
+        btnBackToMenu.setVisibility(View.GONE);
 
+        // Answer buttons
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
         answerButton3.setOnClickListener(v -> checkAnswer(answerButton3.getText()));
         answerButton4.setOnClickListener(v -> checkAnswer(answerButton4.getText()));
 
-        nextButton.setOnClickListener(v -> {
-            goToNextQuestion();
-        });
+        // Next button
+        nextButton.setOnClickListener(v -> goToNextQuestion());
 
-        loadQuestionsApi();
-        // Back button only visible at the very end (also set to GONE in XML)
+        // Back to main menu (LandingPageActivity)
         btnBackToMenu.setOnClickListener(v -> {
             Intent intent = new Intent(CSQuizActivity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -74,6 +76,8 @@ public class CSQuizActivity extends AppCompatActivity {
             finish();
         });
 
+        // Load questions from API
+        loadQuestionsApi();
     }
 
     private void loadQuestionsApi() {
@@ -95,7 +99,6 @@ public class CSQuizActivity extends AppCompatActivity {
 
                 String jsonString = builder.toString();
                 JSONObject root = new JSONObject(jsonString);
-
 
                 JSONArray resultsArray = root.getJSONArray("results");
                 ArrayList<Question> tempList = new ArrayList<>();
@@ -135,7 +138,9 @@ public class CSQuizActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(CSQuizActivity.this, "Error loading questions", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() ->
+                        Toast.makeText(CSQuizActivity.this, "Error loading questions", Toast.LENGTH_SHORT).show()
+                );
             }
         }).start();
     }
@@ -157,11 +162,15 @@ public class CSQuizActivity extends AppCompatActivity {
         scoreTextView.setText("Score: " + score);
         counterTextView.setText("Question " + (currentIndex + 1) + " / " + questionList.size());
 
+        // Make sure quiz UI is visible
         answerButton1.setVisibility(View.VISIBLE);
         answerButton2.setVisibility(View.VISIBLE);
         answerButton3.setVisibility(View.VISIBLE);
         answerButton4.setVisibility(View.VISIBLE);
         nextButton.setVisibility(View.VISIBLE);
+
+        // Back button stays hidden until quiz is over
+        btnBackToMenu.setVisibility(View.GONE);
 
         answerButton1.setText(q.answerList.get(0));
         answerButton2.setText(q.answerList.get(1));
@@ -174,13 +183,21 @@ public class CSQuizActivity extends AppCompatActivity {
         if (currentIndex < questionList.size()) {
             showQuestion();
         } else {
+            // Quiz finished
             questionTextView.setText("You finished!\nScore: " + score + " / " + questionList.size());
+            counterTextView.setText(""); // optional: clear counter
+
+            // Hide quiz buttons
             answerButton1.setVisibility(View.INVISIBLE);
             answerButton2.setVisibility(View.INVISIBLE);
             answerButton3.setVisibility(View.INVISIBLE);
             answerButton4.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
 
+            // Show back-to-menu button now
+            btnBackToMenu.setVisibility(View.VISIBLE);
+
+            // Save high score in Room (background thread)
             SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
             String username = prefs.getString(Session.KEY_USERNAME, "guest");
             int finalScore = score;
@@ -211,12 +228,12 @@ public class CSQuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
             score++;
             scoreTextView.setText("Score: " + score);
-
         } else {
-            Toast.makeText(this, "Wrong! Correct Answer was: " + currentCorrectAnswer, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Wrong! Correct Answer was: " + currentCorrectAnswer,
+                    Toast.LENGTH_SHORT).show();
         }
 
         goToNextQuestion();
     }
-
 }

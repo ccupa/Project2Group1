@@ -35,20 +35,13 @@ public class AdminActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Existing back-to-menu logic
         btnBackToMenu.setOnClickListener(v -> {
             Intent intent = new Intent(AdminActivity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
         });
-        // Back button only visible at the very end (also set to GONE in XML)
-        btnBackToMenu.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminActivity.this, LandingPageActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
-        });
+
 
     }
 }
