@@ -1,5 +1,8 @@
 package com.example.project2group1;
 
+
+import android.content.SharedPreferences;
+import java.util.concurrent.Executors;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -167,6 +170,28 @@ public class PokemonQuizActivity extends AppCompatActivity {
             // Last question just answered – finish quiz
             tvQuestion.setText("Quiz finished! Final score: " + score + "/" + TOTAL_QUESTIONS);
             Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show();
+
+            SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+            String username = prefs.getString(Session.KEY_USERNAME, "guest");
+            int finalScore = score;
+
+            Executors.newSingleThreadExecutor().execute(() -> {
+                AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+                String category = "Pokemon";
+                CategoryHighScore existing = dao.getHighScore(username, category);
+
+                if (existing == null) {
+                    CategoryHighScore hs = new CategoryHighScore();
+                    hs.username = username;
+                    hs.category = category;
+                    hs.score = finalScore;
+                    dao.insert(hs);
+                } else if (finalScore > existing.score) {
+                    dao.updateScore(existing.id, finalScore);
+                }
+            });
 
             // Disable answer buttons so they can't tap again
             btnAnswer1.setEnabled(false);

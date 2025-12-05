@@ -1,5 +1,7 @@
 package com.example.project2group1;
 
+import android.content.SharedPreferences;
+import java.util.concurrent.Executors;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -167,6 +169,28 @@ public class CSQuizActivity extends AppCompatActivity {
             answerButton3.setVisibility(View.INVISIBLE);
             answerButton4.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
+
+            SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+            String username = prefs.getString(Session.KEY_USERNAME, "guest");
+            int finalScore = score;
+
+            Executors.newSingleThreadExecutor().execute(() -> {
+                AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+                String category = "Computer Science";
+                CategoryHighScore existing = dao.getHighScore(username, category);
+
+                if (existing == null) {
+                    CategoryHighScore hs = new CategoryHighScore();
+                    hs.username = username;
+                    hs.category = category;
+                    hs.score = finalScore;
+                    dao.insert(hs);
+                } else if (finalScore > existing.score) {
+                    dao.updateScore(existing.id, finalScore);
+                }
+            });
         }
     }
 

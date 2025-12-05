@@ -12,11 +12,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, LeaderboardEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, LeaderboardEntity.class, CategoryHighScore.class}, version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract LeaderboardDao leaderboardDao();
+    public abstract CategoryHighScoreDao categoryHighScoreDao();
 
     private static volatile AppDatabase INSTANCE;
     static final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
