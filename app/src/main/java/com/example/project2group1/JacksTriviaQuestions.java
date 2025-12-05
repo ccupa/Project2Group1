@@ -1,5 +1,7 @@
 package com.example.project2group1;
 
+import android.content.SharedPreferences;
+import java.util.concurrent.Executors;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -133,6 +135,28 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         String scorePlaceHolder = String.valueOf(score);
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
         updateLeaderboardScore(score);
+
+        SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
+        String username = prefs.getString(Session.KEY_USERNAME, "guest");
+        int finalScore = score;
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+            CategoryHighScoreDao dao = db.categoryHighScoreDao();
+
+            String category = "Basketball";
+            CategoryHighScore existing = dao.getHighScore(username, category);
+
+            if (existing == null) {
+                CategoryHighScore hs = new CategoryHighScore();
+                hs.username = username;
+                hs.category = category;
+                hs.score = finalScore;
+                dao.insert(hs);
+            } else if (finalScore > existing.score) {
+                dao.updateScore(existing.id, finalScore);
+            }
+        });
 
         binding.answerTopLeftButton.setText("Logout"); // userExitClick = 0
         binding.answerTopRightButton.setText("LeaderBoard"); // userExitClick = 1

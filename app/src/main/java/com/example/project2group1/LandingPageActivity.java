@@ -32,18 +32,34 @@ public class LandingPageActivity extends AppCompatActivity {
         boolean isAdmin = prefs.getBoolean(Session.KEY_IS_ADMIN, false);
 
         TextView tvGeoHighScore = findViewById(R.id.tvGeoHighScore);
+        TextView tvBasketBallHighScore = findViewById(R.id.tvBasketballHighScore);
+        TextView tvPokemonHighScore = findViewById(R.id.tvPokemonHighScore);
+        TextView tvComputerScienceHighScore = findViewById(R.id.tvComputerScienceHighScore);
+
 
         Executors.newSingleThreadExecutor().execute(() -> {
-            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-            CategoryHighScoreDao dao = db.categoryHighScoreDao();
-            CategoryHighScore hs = dao.getHighScore(username, "Geography");
+                    AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                    CategoryHighScoreDao dao = db.categoryHighScoreDao();
 
-            int bestScore = (hs != null) ? hs.score : 0;
+                    CategoryHighScore basketBallScore = dao.getHighScore(username, "Basketball");
+                    int ballBest = (basketBallScore != null) ? basketBallScore.score : 0;
 
-            runOnUiThread(() ->
-                    tvGeoHighScore.setText("High Score: " + bestScore)
-            );
-        });
+                    CategoryHighScore geoScore = dao.getHighScore(username, "Geography");
+                    int GeographyBest = (geoScore != null) ? geoScore.score : 0;
+
+                    CategoryHighScore pokemonScore = dao.getHighScore(username, "Pokemon");
+                    int pokeBest = (pokemonScore != null) ? pokemonScore.score : 0;
+
+                    CategoryHighScore computerScore = dao.getHighScore(username, "Computer Science");
+                    int computerBest = (computerScore != null) ? computerScore.score : 0;
+
+                    runOnUiThread(() -> {
+                        tvGeoHighScore.setText("High Score: " + GeographyBest);
+                        tvBasketBallHighScore.setText("High Score: " + ballBest);
+                        tvPokemonHighScore.setText("High Score: " + pokeBest);
+                        tvComputerScienceHighScore.setText("High Score: " + computerBest);
+                    });
+                });
 
         TextView tvWelcome = findViewById(R.id.tvWelcome);
         tvWelcome.setText("Welcome, " + username);
