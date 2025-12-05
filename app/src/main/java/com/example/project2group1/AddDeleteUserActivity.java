@@ -30,16 +30,17 @@ public class AddDeleteUserActivity extends AppCompatActivity {
 
         btnBackToAdmin = findViewById(R.id.btnBackToMenu);
         btnBackToAdmin.setVisibility(Button.VISIBLE);
+
+
+        // Add/Delete user buttons
+        binding.btnAddUser.setOnClickListener(v -> attemptAddUser());
+        binding.btnDeleteUser.setOnClickListener(v -> attemptDeleteUser());
         btnBackToAdmin.setOnClickListener(v -> {
             Intent intent = new Intent(AddDeleteUserActivity.this, AdminActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
         });
-
-        // Add/Delete user buttons
-        binding.btnAddUser.setOnClickListener(v -> attemptAddUser());
-        binding.btnDeleteUser.setOnClickListener(v -> attemptDeleteUser());
     }
 
     private void attemptAddUser() {

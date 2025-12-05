@@ -45,14 +45,15 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("androidx.room:room-runtime:2.7.0")
-    annotationProcessor("androidx.room:room-compiler:2.7.0")
+    implementation("androidx.room:room-runtime:2.8.4")
+    annotationProcessor("androidx.room:room-compiler:2.8.4")
 
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
+    tasks.withType<JavaCompile>().configureEach {
+        options.compilerArgs.add("-Xlint:deprecation")}
 }
