@@ -115,11 +115,20 @@
 
         <Button
             android:id="@+id/btnNextQuestion"
+            android:layout_width="192dp"
+            android:layout_height="107dp"
+            android:layout_marginTop="4dp"
+            android:paddingVertical="12dp"
+            android:text="@string/next_question" />
+
+        <Button
+            android:id="@+id/btnBackToMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/next_question"
-            android:paddingVertical="12dp"
-            android:layout_marginTop="4dp" />
+            android:text="Back to Quiz Selection"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
+
 
     </LinearLayout>
 

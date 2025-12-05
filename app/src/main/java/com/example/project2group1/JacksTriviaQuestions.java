@@ -339,22 +339,18 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         try{
             Scanner s = new Scanner(getAssets().open(filename));
             while (s.hasNext()) {
-                // read the line
                 String line = s.nextLine().trim();
                 if (line.startsWith("#") || line.isEmpty()) continue;
 
-                // parse through the parts of the line and store them
                 String [] parts = line.split(",",-1);
                 if (parts.length != 12) continue;
                 for (int i = 0; i < 12; i++) parts[i] = parts[i].trim();
 
-                // begin inputting the question
-                // [question, correct, wrong, wrong, wrong]
-                String[] question = new String[5];
-                question[0] = parts[0]; //question
-                question[1] = parts[1]; //correct answer
 
-                // get three indexes so the wrong answers are always random
+                String[] question = new String[5];
+                question[0] = parts[0];
+                question[1] = parts[1];
+
                 int index1 = (int)(Math.random() * 10) + 2;
                 int index2 = (int)(Math.random() * 10) + 2;
                 int index3 = (int)(Math.random() * 10) + 2;
@@ -365,12 +361,10 @@ public class JacksTriviaQuestions extends AppCompatActivity {
                     index3 = (int)(Math.random() * 9) + 2;
                 }
 
-                // add incorrect answers to question
                 question[2] = parts[index1];
                 question[3] = parts[index2];
                 question[4] = parts[index3];
 
-                // add question to array list
                 allQuestions.add(question);
             }
             s.close();
@@ -383,7 +377,6 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             return;
         }
 
-        // choose ten random questions and put them into answers
         for (int i = 0; i < answers.length; i++) {
 
             int randomIndex = (int)(Math.random() * allQuestions.size());

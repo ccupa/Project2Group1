@@ -3,40 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the Admin Dashboard."
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
-    <TextView
-        android:id="@+id/tvText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Down Below, are the special admin buttons"
-        android:textSize="18dp"
-        android:paddingBottom="8dp" />
+        android:text="Add / Delete User Page"
+        android:textSize="22sp" />
 
-    <Button
-        android:id="@+id/btnAddDelUser"
+    <EditText
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add/Remove User" />
+        android:hint="Username"
+        android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/btnViwHistoryofUser"
+    <EditText
+        android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View List of Login History" />
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnAddUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add User"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnDeleteUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete User"
+        android:layout_marginTop="8dp" />
     <Button
         android:id="@+id/btnBackToMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back to Quiz Selection"
+        android:text="Back to Admin Dashboard"
         android:layout_marginTop="16dp"
         android:visibility="gone" />
+
 </LinearLayout>

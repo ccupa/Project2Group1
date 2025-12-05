@@ -32,6 +32,7 @@ public class CSQuizActivity extends AppCompatActivity {
     Button answerButton3;
     Button answerButton4;
     Button nextButton;
+    Button btnBackToMenu;
 
     ArrayList<Question> questionList = new ArrayList<>();
     int currentIndex = 0;
@@ -52,6 +53,8 @@ public class CSQuizActivity extends AppCompatActivity {
         answerButton3 = findViewById(R.id.btnAnswer3);
         answerButton4 = findViewById(R.id.btnAnswer4);
         nextButton = findViewById(R.id.btnNextQuestion);
+        btnBackToMenu = findViewById(R.id.btnBackToMenu);
+
 
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
@@ -63,6 +66,14 @@ public class CSQuizActivity extends AppCompatActivity {
         });
 
         loadQuestionsApi();
+        // Back button only visible at the very end (also set to GONE in XML)
+        btnBackToMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(CSQuizActivity.this, LandingPageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
     }
 
     private void loadQuestionsApi() {
@@ -200,6 +211,7 @@ public class CSQuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
             score++;
             scoreTextView.setText("Score: " + score);
+
         } else {
             Toast.makeText(this, "Wrong! Correct Answer was: " + currentCorrectAnswer, Toast.LENGTH_SHORT).show();
         }
