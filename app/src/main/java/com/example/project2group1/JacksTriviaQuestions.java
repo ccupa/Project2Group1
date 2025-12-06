@@ -117,7 +117,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
     /**
      * simple function to check if score needs to be updated and updates database
      */
-    private void updateLeaderboardScore(int score) {
+    private void updateLeaderboardScore() {
 
         AppDatabase db = AppDatabase.getInstance(this);
         LeaderboardDao dao = db.leaderboardDao();
@@ -156,7 +156,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
 
         String scorePlaceHolder = String.valueOf(score);
         binding.questionTextView.setText("Good Job!!\nYour Score: " + scorePlaceHolder);
-        updateLeaderboardScore(score);
+        updateLeaderboardScore();
 
         SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
         String username = prefs.getString(Session.KEY_USERNAME, "guest");
