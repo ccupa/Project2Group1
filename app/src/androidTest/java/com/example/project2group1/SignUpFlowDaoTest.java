@@ -60,6 +60,7 @@ public class SignUpFlowDaoTest {
         assertEquals(password, fromDb.password);
         assertFalse(fromDb.isAdmin);
 
+
         // Verify leaderboard row exists and is initialized to zero scores
         LeaderboardEntity lbFromDb = lbDao.getByUsername(username);
         assertNotNull(lbFromDb);
