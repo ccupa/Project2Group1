@@ -57,5 +57,3 @@ public class PokemonHighScoreDaoTest {
         assertEquals(9, updated.score);
     }
 }
-
-}
