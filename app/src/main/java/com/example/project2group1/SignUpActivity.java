@@ -16,6 +16,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private ActivitySignUpBinding binding;
     private UserDao userDao;
+    private LeaderboardDao lbDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Use same DB pattern as LoginScreen: AppDatabase.getInstance(...)
         userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
+        lbDao = AppDatabase.getInstance(getApplicationContext()).leaderboardDao();
 
         binding.buttonCreateAccount.setOnClickListener(v -> attemptSignUp());
         binding.buttonCancel.setOnClickListener(v -> finish());
@@ -61,6 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
 
             User newUser = new User(username, password, false); // regular user, not admin
             long id = userDao.insert(newUser);
+
+            LeaderboardEntity newUser2 = new LeaderboardEntity(username);
+            lbDao.insert(newUser2);
 
             runOnUiThread(() -> {
                 if (id > 0) {

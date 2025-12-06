@@ -185,6 +185,7 @@ public class CSQuizActivity extends AppCompatActivity {
         } else {
             // Quiz finished
             questionTextView.setText("You finished!\nScore: " + score + " / " + questionList.size());
+            updateLeaderboardScore();
             counterTextView.setText(""); // optional: clear counter
 
             // Hide quiz buttons
@@ -235,5 +236,33 @@ public class CSQuizActivity extends AppCompatActivity {
         }
 
         goToNextQuestion();
+    }
+
+    private void updateLeaderboardScore() {
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            if (score <= user.joshTriviaScore) return;
+
+            user.joshTriviaScore = score;
+
+            user.totalScore =
+                    user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+
+
+        });
+
     }
 }

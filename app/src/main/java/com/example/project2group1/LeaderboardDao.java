@@ -36,6 +36,9 @@ public interface LeaderboardDao {
     @Query("SELECT COUNT(*) FROM leaderboard")
     int getCount();
 
+    @Query("DELETE FROM leaderboard WHERE username = :username")
+    void deleteUser(String username);
+
 
 
 

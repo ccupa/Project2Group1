@@ -36,7 +36,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Jack"
+        android:text="B-Ball"
         app:layout_constraintStart_toEndOf="@+id/nameHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -46,7 +46,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Carlos"
+        android:text="Geo"
         app:layout_constraintStart_toEndOf="@+id/jackHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -56,7 +56,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Josh"
+        android:text="CS"
         app:layout_constraintStart_toEndOf="@+id/carlosHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -66,7 +66,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Joe"
+        android:text="Poki"
         app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 

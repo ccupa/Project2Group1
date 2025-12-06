@@ -169,6 +169,7 @@ public class PokemonQuizActivity extends AppCompatActivity {
         } else {
             // Last question just answered – finish quiz
             tvQuestion.setText("Quiz finished! Final score: " + score + "/" + TOTAL_QUESTIONS);
+            updateLeaderboardScore();
             Toast.makeText(this, "Quiz finished!", Toast.LENGTH_SHORT).show();
 
             SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
@@ -207,5 +208,32 @@ public class PokemonQuizActivity extends AppCompatActivity {
     private String capitalize(String s) {
         if (s == null || s.isEmpty()) return s;
         return s.substring(0, 1).toUpperCase() + s.substring(1);
+    }
+
+    private void updateLeaderboardScore() {
+
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            if (score <= user.joeTriviaScore) return;
+
+            user.joeTriviaScore = score;
+
+            user.totalScore =
+                    user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+
+        });
+
     }
 }

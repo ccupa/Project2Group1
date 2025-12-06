@@ -16,6 +16,7 @@ public class AddDeleteUserActivity extends AppCompatActivity {
 
     private ActivityAddRemoveUserBinding binding;
     private UserDao userDao;
+    private LeaderboardDao lbDao;
 
     Button btnBackToAdmin; // ← added to match AdminActivity style
 
@@ -27,6 +28,7 @@ public class AddDeleteUserActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         userDao = AppDatabase.getInstance(getApplicationContext()).userDao();
+        lbDao = AppDatabase.getInstance(getApplicationContext()).leaderboardDao();
 
         btnBackToAdmin = findViewById(R.id.btnBackToMenu);
         btnBackToAdmin.setVisibility(Button.VISIBLE);
@@ -67,6 +69,9 @@ public class AddDeleteUserActivity extends AppCompatActivity {
             User newUser = new User(username, password, false);
             long id = userDao.insert(newUser);
 
+            LeaderboardEntity newUser2 = new LeaderboardEntity(username);
+            lbDao.insert(newUser2);
+
             runOnUiThread(() -> {
                 if (id > 0) {
                     toastMaker("User added successfully");
@@ -95,12 +100,15 @@ public class AddDeleteUserActivity extends AppCompatActivity {
             }
 
             userDao.deleteUser(username);
+            lbDao.deleteUser(username);
 
             runOnUiThread(() -> {
                 toastMaker("User deleted successfully");
                 binding.etUsername.setText("");
                 binding.etPassword.setText("");
             });
+
+
         });
     }
 
