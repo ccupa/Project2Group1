@@ -14,4 +14,26 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 public class SignUpFlowDaoTest {
+    @RunWith(AndroidJUnit4.class)
+    public class SignUpFlowDaoTest {
+
+        private AppDatabase db;
+        private UserDao userDao;
+        private LeaderboardDao lbDao;
+
+        @Before
+        public void createDb() {
+            Context context = ApplicationProvider.getApplicationContext();
+            db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
+                    .allowMainThreadQueries()
+                    .build();
+            userDao = db.userDao();
+            lbDao = db.leaderboardDao();
+        }
+
+        @After
+        public void closeDb() {
+            db.close();
+        }
+
 }
