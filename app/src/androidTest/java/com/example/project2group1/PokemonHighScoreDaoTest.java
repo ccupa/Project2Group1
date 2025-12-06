@@ -26,4 +26,36 @@ public class PokemonHighScoreDaoTest {
                 .build();
         hsDao = db.categoryHighScoreDao();
     }
+
+    @After
+    public void closeDb() {
+        db.close();
+    }
+
+    @Test
+    public void pokemonHighScore_updatesWhenHigherScore() {
+        String username = "ash";
+        String category = "Pokemon";
+
+        // Insert initial score 3
+        CategoryHighScore hs = new CategoryHighScore();
+        hs.username = username;
+        hs.category = category;
+        hs.score = 3;
+        long id = hsDao.insert(hs);
+        assertTrue(id > 0);
+
+        CategoryHighScore initial = hsDao.getHighScore(username, category);
+        assertNotNull(initial);
+        assertEquals(3, initial.score);
+
+        // Update with higher score 9
+        hsDao.updateScore(initial.id, 9);
+
+        CategoryHighScore updated = hsDao.getHighScore(username, category);
+        assertNotNull(updated);
+        assertEquals(9, updated.score);
+    }
+}
+
 }
