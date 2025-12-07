@@ -56,7 +56,6 @@ public class CSQuizActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.btnNextQuestion);
         btnBackToMenu = findViewById(R.id.btnBackToMenu);
 
-        // Hide back button during the quiz; will show it only at the end
         btnBackToMenu.setVisibility(View.GONE);
 
         // Answer buttons

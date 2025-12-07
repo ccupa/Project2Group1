@@ -17,7 +17,7 @@ public class AddDeleteUserActivity extends AppCompatActivity {
     private ActivityAddRemoveUserBinding binding;
     private UserDao userDao;
 
-    Button btnBackToAdmin; // ← added to match AdminActivity style
+    Button btnBackToAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
