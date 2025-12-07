@@ -133,12 +133,12 @@ public class LeaderBoard extends AppCompatActivity {
             totalScore += third.joshTriviaScore;
             totalScore += third.joeTriviaScore;
 
-            binding.p2NameTextView.setText(String.valueOf(third.username));
-            binding.p2JackTextView.setText(String.valueOf(third.jackTriviaScore));
-            binding.p2CarlosTextView.setText(String.valueOf(third.carlosTriviaScore));
-            binding.p2joshTextView.setText(String.valueOf(third.joshTriviaScore));
-            binding.p2joeTextView.setText(String.valueOf(third.joeTriviaScore));
-            binding.p2totalTextView.setText(String.valueOf(totalScore));
+            binding.p3NameTextView.setText(String.valueOf(third.username));
+            binding.p3JackTextView.setText(String.valueOf(third.jackTriviaScore));
+            binding.p3CarlosTextView.setText(String.valueOf(third.carlosTriviaScore));
+            binding.p3joshTextView.setText(String.valueOf(third.joshTriviaScore));
+            binding.p3joeTextView.setText(String.valueOf(third.joeTriviaScore));
+            binding.p3totalTextView.setText(String.valueOf(totalScore));
 
 
             if (leaders.size() < 4) return;
@@ -150,12 +150,12 @@ public class LeaderBoard extends AppCompatActivity {
             totalScore += fourth.joshTriviaScore;
             totalScore += fourth.joeTriviaScore;
 
-            binding.p2NameTextView.setText(String.valueOf(fourth.username));
-            binding.p2JackTextView.setText(String.valueOf(fourth.jackTriviaScore));
-            binding.p2CarlosTextView.setText(String.valueOf(fourth.carlosTriviaScore));
-            binding.p2joshTextView.setText(String.valueOf(fourth.joshTriviaScore));
-            binding.p2joeTextView.setText(String.valueOf(fourth.joeTriviaScore));
-            binding.p2totalTextView.setText(String.valueOf(totalScore));
+            binding.p4NameTextView.setText(String.valueOf(fourth.username));
+            binding.p4JackTextView.setText(String.valueOf(fourth.jackTriviaScore));
+            binding.p4CarlosTextView.setText(String.valueOf(fourth.carlosTriviaScore));
+            binding.p4joshTextView.setText(String.valueOf(fourth.joshTriviaScore));
+            binding.p4joeTextView.setText(String.valueOf(fourth.joeTriviaScore));
+            binding.p4totalTextView.setText(String.valueOf(totalScore));
 
 
             if (leaders.size() < 4) return;
@@ -167,12 +167,12 @@ public class LeaderBoard extends AppCompatActivity {
             totalScore += fifth.joshTriviaScore;
             totalScore += fifth.joeTriviaScore;
 
-            binding.p2NameTextView.setText(String.valueOf(fifth.username));
-            binding.p2JackTextView.setText(String.valueOf(fifth.jackTriviaScore));
-            binding.p2CarlosTextView.setText(String.valueOf(fifth.carlosTriviaScore));
-            binding.p2joshTextView.setText(String.valueOf(fifth.joshTriviaScore));
-            binding.p2joeTextView.setText(String.valueOf(fifth.joeTriviaScore));
-            binding.p2totalTextView.setText(String.valueOf(totalScore));
+            binding.p5NameTextView.setText(String.valueOf(fifth.username));
+            binding.p5JackTextView.setText(String.valueOf(fifth.jackTriviaScore));
+            binding.p5CarlosTextView.setText(String.valueOf(fifth.carlosTriviaScore));
+            binding.p5joshTextView.setText(String.valueOf(fifth.joshTriviaScore));
+            binding.p5joeTextView.setText(String.valueOf(fifth.joeTriviaScore));
+            binding.p5totalTextView.setText(String.valueOf(totalScore));
 
 
         });

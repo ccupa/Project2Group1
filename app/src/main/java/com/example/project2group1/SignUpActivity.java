@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,7 +66,9 @@ public class SignUpActivity extends AppCompatActivity {
             long id = userDao.insert(newUser);
 
             LeaderboardEntity newUser2 = new LeaderboardEntity(username);
-            lbDao.insert(newUser2);
+            long lb_id = lbDao.insert(newUser2);
+            Log.d("SIGNUP", "Leaderboard inserted rowId=" + lb_id);
+
 
             runOnUiThread(() -> {
                 if (id > 0) {
