@@ -42,12 +42,12 @@ public class LoginScreen extends AppCompatActivity {
         });
 
 
-        binding.skipLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), LandingPageActivity.class));
-            }
-        });
+        //binding.skipLoginButton.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+            //    startActivity(new Intent(getApplicationContext(), LandingPageActivity.class));
+            //}
+       // });
 
     }
 

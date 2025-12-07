@@ -68,12 +68,13 @@ public class GeographyQuizActivity extends AppCompatActivity{
                     showQuestion();
                 } else {
                     questionTextView.setText("You finished!\nScore: " + score + " / " + questionList.size());
-                    updateLeaderboardScore();
                     answerButton1.setVisibility(View.INVISIBLE);
                     answerButton2.setVisibility(View.INVISIBLE);
                     answerButton3.setVisibility(View.INVISIBLE);
                     answerButton4.setVisibility(View.INVISIBLE);
                     nextButton.setVisibility(View.INVISIBLE);
+
+                    updateLeaderboardScore();
 
                     backToMenuButton.setVisibility(View.VISIBLE);
 
@@ -178,7 +179,7 @@ public class GeographyQuizActivity extends AppCompatActivity{
         return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
-    private void showQuestion() {
+    void showQuestion() {
         if (currentIndex < 0 || currentIndex >= questionList.size()) {
             return;
         }
