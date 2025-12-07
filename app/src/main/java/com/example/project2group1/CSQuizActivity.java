@@ -22,6 +22,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Activity that runs a 10-question Computer Science quiz using the OpenTDB API.
+ *
+ * <p>This activity loads questions asynchronously, displays one question at a time,
+ * tracks the user's score, and updates both the category-specific high score and
+ * the global leaderboard stored in Room.</p>
+ *
+ * <p>The quiz ends when all questions have been answered, at which point the UI
+ * hides the answer buttons and displays a button to return to the main menu.</p>
+ */
 public class CSQuizActivity extends AppCompatActivity {
 
     TextView questionTextView;
@@ -40,6 +50,12 @@ public class CSQuizActivity extends AppCompatActivity {
     int score = 0;
     String currentCorrectAnswer = "";
 
+    /**
+     * Initializes quiz UI components, sets button listeners,
+     * and begins loading questions from the API.
+     *
+     * @param savedInstanceState previous activity state (unused)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +74,16 @@ public class CSQuizActivity extends AppCompatActivity {
 
         btnBackToMenu.setVisibility(View.GONE);
 
-        // Answer buttons
+        // Answer button listeners
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
         answerButton3.setOnClickListener(v -> checkAnswer(answerButton3.getText()));
         answerButton4.setOnClickListener(v -> checkAnswer(answerButton4.getText()));
 
-        // Next button
+        // Next button listener
         nextButton.setOnClickListener(v -> goToNextQuestion());
 
-        // Back to main menu (LandingPageActivity)
+        // Return to main menu
         btnBackToMenu.setOnClickListener(v -> {
             Intent intent = new Intent(CSQuizActivity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -75,10 +91,17 @@ public class CSQuizActivity extends AppCompatActivity {
             finish();
         });
 
-        // Load questions from API
         loadQuestionsApi();
     }
 
+    /**
+     * Loads 10 multiple-choice computer science questions from the OpenTDB API.
+     *
+     * <p>This runs on a background thread to avoid blocking the UI. Once fetched,
+     * questions are decoded, parsed, shuffled, and stored in {@code questionList}.</p>
+     *
+     * <p>If API loading fails, a Toast is shown to the user.</p>
+     */
     private void loadQuestionsApi() {
         new Thread(() -> {
             try {
@@ -102,6 +125,7 @@ public class CSQuizActivity extends AppCompatActivity {
                 JSONArray resultsArray = root.getJSONArray("results");
                 ArrayList<Question> tempList = new ArrayList<>();
 
+                // Parse and store all questions
                 for (int i = 0; i < resultsArray.length(); i++) {
                     JSONObject obj = resultsArray.getJSONObject(i);
                     String question = htmlDecode(obj.getString("question"));
@@ -122,13 +146,14 @@ public class CSQuizActivity extends AppCompatActivity {
                     tempList.add(q);
                 }
 
+                // Update UI on main thread
                 runOnUiThread(() -> {
                     questionList.clear();
                     questionList.addAll(tempList);
                     currentIndex = 0;
                     score = 0;
 
-                    if (questionList.size() > 0) {
+                    if (!questionList.isEmpty()) {
                         showQuestion();
                     } else {
                         Toast.makeText(CSQuizActivity.this, "No questions found", Toast.LENGTH_SHORT).show();
@@ -144,59 +169,77 @@ public class CSQuizActivity extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * Converts HTML-encoded strings from the API (e.g. &quot;, &amp;, &lt;)
+     * into normal displayable characters.
+     *
+     * @param text the encoded text
+     * @return decoded plain text
+     */
     private String htmlDecode(String text) {
         return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
+    /**
+     * Displays the current question and updates the score counter and question counter.
+     *
+     * <p>If {@code currentIndex} is out of bounds, no action is taken.</p>
+     */
     private void showQuestion() {
-        if (currentIndex < 0 || currentIndex >= questionList.size()) {
-            return;
-        }
+        if (currentIndex < 0 || currentIndex >= questionList.size()) return;
 
         Question q = questionList.get(currentIndex);
         currentCorrectAnswer = q.correctAnswer;
 
         questionTextView.setText(q.questionText);
-
         scoreTextView.setText("Score: " + score);
         counterTextView.setText("Question " + (currentIndex + 1) + " / " + questionList.size());
 
-        // Make sure quiz UI is visible
+        // Ensure elements are visible
         answerButton1.setVisibility(View.VISIBLE);
         answerButton2.setVisibility(View.VISIBLE);
         answerButton3.setVisibility(View.VISIBLE);
         answerButton4.setVisibility(View.VISIBLE);
         nextButton.setVisibility(View.VISIBLE);
-
-        // Back button stays hidden until quiz is over
         btnBackToMenu.setVisibility(View.GONE);
 
+        // Populate button text
         answerButton1.setText(q.answerList.get(0));
         answerButton2.setText(q.answerList.get(1));
         answerButton3.setText(q.answerList.get(2));
         answerButton4.setText(q.answerList.get(3));
     }
 
+    /**
+     * Advances the quiz to the next question. If all questions are completed,
+     * displays the final score, hides answer buttons, and shows the menu button.
+     *
+     * <p>Also updates Room database values for both category high score and main leaderboard.</p>
+     */
     private void goToNextQuestion() {
         currentIndex++;
+
         if (currentIndex < questionList.size()) {
             showQuestion();
         } else {
-            // Quiz finished
+            // Quiz complete
             questionTextView.setText("You finished!\nScore: " + score + " / " + questionList.size());
-            counterTextView.setText(""); // optional: clear counter
+            counterTextView.setText("");
 
-            // Hide quiz buttons
+            // Hide quiz UI
             answerButton1.setVisibility(View.INVISIBLE);
             answerButton2.setVisibility(View.INVISIBLE);
             answerButton3.setVisibility(View.INVISIBLE);
             answerButton4.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
 
-            // Show back-to-menu button now
+            // Show navigation button
             btnBackToMenu.setVisibility(View.VISIBLE);
 
-            // Save high score in Room (background thread)
+            // Update leaderboard scores
+            updateLeaderboardScore(score);
+
+            // Update category high score in Room
             SharedPreferences prefs = getSharedPreferences(Session.PREFS, MODE_PRIVATE);
             String username = prefs.getString(Session.KEY_USERNAME, "guest");
             int finalScore = score;
@@ -221,18 +264,61 @@ public class CSQuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the selected answer, updates the user's score,
+     * shows feedback via Toast, and then loads the next question.
+     *
+     * @param text the text of the selected answer button
+     */
     private void checkAnswer(CharSequence text) {
         String chosen = text.toString();
+
         if (chosen.equals(currentCorrectAnswer)) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
             score++;
             scoreTextView.setText("Score: " + score);
         } else {
-            Toast.makeText(this,
+            Toast.makeText(
+                    this,
                     "Wrong! Correct Answer was: " + currentCorrectAnswer,
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT
+            ).show();
         }
 
         goToNextQuestion();
+    }
+
+    /**
+     * Updates the leaderboard entry for the currently logged-in user.
+     *
+     * <p>The update only occurs if the new score exceeds the user's previous
+     * score for this category. After updating the category score, the user's
+     * {@code totalScore} is recalculated as the sum of all quiz category scores.</p>
+     *
+     * <p>This operation runs asynchronously through Room's database executor.</p>
+     *
+     * @param score the final quiz score achieved by the player
+     */
+    private void updateLeaderboardScore(int score) {
+        AppDatabase db = AppDatabase.getInstance(this);
+        LeaderboardDao dao = db.leaderboardDao();
+        String username = LandingPageActivity.getUsername();
+
+        AppDatabase.dbExecutor.execute(() -> {
+            LeaderboardEntity user = dao.getByUsername(username);
+            if (user == null) return;
+
+            if (score <= user.joshTriviaScore) return;
+
+            user.joshTriviaScore = score;
+
+            user.totalScore =
+                    user.jackTriviaScore +
+                            user.carlosTriviaScore +
+                            user.joshTriviaScore +
+                            user.joeTriviaScore;
+
+            dao.update(user);
+        });
     }
 }
