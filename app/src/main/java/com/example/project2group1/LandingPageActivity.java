@@ -19,6 +19,7 @@ public class LandingPageActivity extends AppCompatActivity {
     private TextView tvBasketBallHighScore;
     private TextView tvPokemonHighScore;
     private TextView tvComputerScienceHighScore;
+    public static String testUsername = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,11 +129,19 @@ public class LandingPageActivity extends AppCompatActivity {
     }
 
     public static String getUsername() {
+
+        if (testUsername != null) {
+            return testUsername; // only for tests
+        }
         return un;
     }
 
     static Intent landingPageIntentFactory(Context context) {
         return new Intent(context, LandingPageActivity.class);
+    }
+
+    public static void setUsernameForTest(String username) {
+        testUsername = username;
     }
 
 }
