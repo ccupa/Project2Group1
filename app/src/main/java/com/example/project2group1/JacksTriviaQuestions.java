@@ -429,5 +429,9 @@ public class JacksTriviaQuestions extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    public void setCorrectIndex(int index) { //only for tests
+        correctIndex = index;
+    }
+
 }
 
