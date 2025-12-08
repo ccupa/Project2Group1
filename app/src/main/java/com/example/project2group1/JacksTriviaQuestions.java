@@ -1,6 +1,8 @@
 package com.example.project2group1;
 
 import android.content.SharedPreferences;
+
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -252,7 +254,7 @@ public class JacksTriviaQuestions extends AppCompatActivity {
             binding.questionTextView.setText(question[0]);
 
             ArrayList<String> choices = new ArrayList<>();
-            for (int i = 1; i < question.length; i++) choices.add(question[i]);
+            choices.addAll(Arrays.asList(question).subList(1, question.length));
             Collections.shuffle(choices);
             correctIndex = choices.indexOf(question[1]);
 
