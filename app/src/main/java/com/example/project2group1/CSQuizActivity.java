@@ -22,6 +22,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Activity that runs a Computer Science multiple-choice quiz using
+ * questions loaded from the OpenTDB API.
+ *
+ * <p>This activity:
+ * <ul>
+ *     <li>Fetches 10 CS questions from a remote API</li>
+ *     <li>Displays one question at a time with four possible answers</li>
+ *     <li>Keeps track of the user's score</li>
+ *     <li>Updates both category high scores and the global leaderboard
+ *         when the quiz is finished</li>
+ * </ul>
+ * </p>
+ */
 public class CSQuizActivity extends AppCompatActivity {
 
     TextView questionTextView;
@@ -40,6 +54,12 @@ public class CSQuizActivity extends AppCompatActivity {
     int score = 0;
     String currentCorrectAnswer = "";
 
+    /**
+     * Initializes the quiz UI, sets up button listeners,
+     * and starts loading questions from the API.
+     *
+     * @param savedInstanceState previously saved state (unused)
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,16 +79,16 @@ public class CSQuizActivity extends AppCompatActivity {
         // Hide back button during the quiz; will show it only at the end
         btnBackToMenu.setVisibility(View.GONE);
 
-        // Answer buttons
+        // Answer button listeners
         answerButton1.setOnClickListener(v -> checkAnswer(answerButton1.getText()));
         answerButton2.setOnClickListener(v -> checkAnswer(answerButton2.getText()));
         answerButton3.setOnClickListener(v -> checkAnswer(answerButton3.getText()));
         answerButton4.setOnClickListener(v -> checkAnswer(answerButton4.getText()));
 
-        // Next button
+        // Next button moves to the next question (or ends quiz)
         nextButton.setOnClickListener(v -> goToNextQuestion());
 
-        // Back to main menu (LandingPageActivity)
+        // Back to main menu (LandingPageActivity) after quiz completion
         btnBackToMenu.setOnClickListener(v -> {
             Intent intent = new Intent(CSQuizActivity.this, LandingPageActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -80,6 +100,13 @@ public class CSQuizActivity extends AppCompatActivity {
         loadQuestionsApi();
     }
 
+    /**
+     * Loads 10 computer science trivia questions from the OpenTDB API.
+     *
+     * <p>This method runs on a background thread, parses the JSON response,
+     * constructs {@code Question} objects, and populates {@link #questionList}.
+     * Once loaded, it resets the score and shows the first question on the UI thread.</p>
+     */
     private void loadQuestionsApi() {
         new Thread(() -> {
             try {
@@ -145,10 +172,23 @@ public class CSQuizActivity extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * Decodes HTML-encoded text from the API into plain text.
+     * For example, converts entities like {@code &quot;} back to quotes.
+     *
+     * @param text the HTML-encoded string
+     * @return a decoded string safe for display in a TextView
+     */
     private String htmlDecode(String text) {
         return Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY).toString();
     }
 
+    /**
+     * Displays the current question and possible answers on screen.
+     *
+     * <p>If {@link #currentIndex} is out of bounds, this method safely returns
+     * without updating the UI.</p>
+     */
     private void showQuestion() {
         if (currentIndex < 0 || currentIndex >= questionList.size()) {
             return;
@@ -178,6 +218,19 @@ public class CSQuizActivity extends AppCompatActivity {
         answerButton4.setText(q.answerList.get(3));
     }
 
+    /**
+     * Advances to the next question in the quiz, or finishes the quiz
+     * if there are no more questions left.
+     *
+     * <p>When the quiz is finished, this method:
+     * <ul>
+     *     <li>Shows the final score</li>
+     *     <li>Updates the leaderboard and category high score</li>
+     *     <li>Hides quiz controls</li>
+     *     <li>Shows the "Back to Menu" button</li>
+     * </ul>
+     * </p>
+     */
     private void goToNextQuestion() {
         currentIndex++;
         if (currentIndex < questionList.size()) {
@@ -223,6 +276,14 @@ public class CSQuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks whether the selected answer is correct and updates the score.
+     *
+     * <p>If the answer is correct, the score is incremented and shown on screen.
+     * Regardless of correctness, the quiz then moves on to the next question.</p>
+     *
+     * @param text the text of the button the user tapped
+     */
     private void checkAnswer(CharSequence text) {
         String chosen = text.toString();
         if (chosen.equals(currentCorrectAnswer)) {
@@ -238,6 +299,18 @@ public class CSQuizActivity extends AppCompatActivity {
         goToNextQuestion();
     }
 
+    /**
+     * Updates the global leaderboard for the current user after the quiz ends.
+     *
+     * <p>This method:
+     * <ul>
+     *     <li>Retrieves the logged-in user's leaderboard record</li>
+     *     <li>Only updates {@code joshTriviaScore} if the new score is higher</li>
+     *     <li>Recalculates {@code totalScore} from all category scores</li>
+     *     <li>Runs entirely on a background thread using {@link AppDatabase#dbExecutor}</li>
+     * </ul>
+     * </p>
+     */
     private void updateLeaderboardScore() {
 
         AppDatabase db = AppDatabase.getInstance(this);
@@ -260,9 +333,6 @@ public class CSQuizActivity extends AppCompatActivity {
                             user.joeTriviaScore;
 
             dao.update(user);
-
-
         });
-
     }
 }
