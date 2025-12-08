@@ -26,7 +26,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Name"
+        android:text="@string/name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -36,7 +36,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="B-Ball"
+        android:text="@string/b_ball"
         app:layout_constraintStart_toEndOf="@+id/nameHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -46,7 +46,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Geo"
+        android:text="@string/geo"
         app:layout_constraintStart_toEndOf="@+id/jackHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -56,7 +56,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="CS"
+        android:text="@string/cs"
         app:layout_constraintStart_toEndOf="@+id/carlosHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -66,7 +66,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Poki"
+        android:text="@string/poki"
         app:layout_constraintStart_toEndOf="@+id/joshHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -76,7 +76,7 @@
         android:layout_height="35sp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Total"
+        android:text="@string/total"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/joeHeaderTextView"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
@@ -116,10 +116,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:gravity="center"
         android:layout_marginTop="88dp"
         android:width="30sp"
         android:height="35sp"
-        android:text="#1"
+        android:text="@string/_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardTextView" />
 
@@ -129,8 +130,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:width="30sp"
+        android:gravity="center"
         android:height="35sp"
-        android:text="#2"
+        android:text="@string/_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p1TextView" />
 
@@ -140,8 +142,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:width="30sp"
+        android:gravity="center"
         android:height="35sp"
-        android:text="#3"
+        android:text="@string/_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p2TextView" />
 
@@ -151,8 +154,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:width="30sp"
+        android:gravity="center"
         android:height="35sp"
-        android:text="#4"
+        android:text="@string/_4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p3TextView" />
 
@@ -163,7 +167,8 @@
         android:layout_marginStart="4dp"
         android:width="30sp"
         android:height="35sp"
-        android:text="#5"
+        android:gravity="center"
+        android:text="@string/_5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p4TextView" />
 
@@ -459,7 +464,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Jack"
+        android:text="@string/b_ball"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
 
@@ -480,7 +485,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Joe"
+        android:text="@string/poki"
         app:layout_constraintStart_toEndOf="@+id/currentUserJoshScoreTextView"
         app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
 
@@ -511,7 +516,7 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Josh"
+        android:text="@string/cs"
         app:layout_constraintStart_toEndOf="@+id/currentUserCarlosScoreTextView"
         app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
 
@@ -522,7 +527,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Carlos"
+        android:text="@string/geo"
         app:layout_constraintStart_toEndOf="@+id/currentUserJackScoreTextView"
         app:layout_constraintTop_toBottomOf="@+id/currentUserTotalScoreTextView" />
 

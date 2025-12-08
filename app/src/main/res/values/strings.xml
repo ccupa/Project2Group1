@@ -29,4 +29,15 @@
     <string name="question">Question:</string>
     <string name="back_to_menu">Back to Menu</string>
     <string name="basketball">Basketball</string>
+    <string name="name">Name</string>
+    <string name="b_ball">B-Ball</string>
+    <string name="geo">Geo</string>
+    <string name="cs">CS</string>
+    <string name="poki">Poki</string>
+    <string name="total">Total</string>
+    <string name="_1">#1</string>
+    <string name="_2">#2</string>
+    <string name="_3">#3</string>
+    <string name="_4">#4</string>
+    <string name="_5">#5</string>
 </resources>
